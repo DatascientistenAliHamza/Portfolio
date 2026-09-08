@@ -5,6 +5,7 @@ import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Nav from "@/components/Nav";
+import PowerBI from "@/components/PowerBI";
 import Projects from "@/components/Projects";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
         <About />
         <Experience />
         <Projects />
+        <PowerBI />
         <CTA />
       </main>
       <Footer />
