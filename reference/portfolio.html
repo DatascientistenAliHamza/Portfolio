@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ali Hamza — Industrial Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#170F0C;
+    --panel:#20150F;
+    --line:rgba(255,193,133,0.16);
+    --line-strong:rgba(255,193,133,0.34);
+    --text:#FBF3EA;
+    --muted:#C9B7A5;
+    --amber:#FFB238;
+    --orange:#FF6B4A;
+    --cyan:#4CE3D6;
+    --ok:#7BE28A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Space Grotesk', sans-serif;
+    background:
+      linear-gradient(180deg, #1B120D, var(--void) 60%),
+      repeating-linear-gradient(0deg, rgba(255,178,56,0.05) 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(90deg, rgba(255,178,56,0.05) 0 1px, transparent 1px 42px);
+    color:var(--text);
+    line-height:1.55;
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::after{
+    content:''; position:fixed; inset:0; z-index:3; pointer-events:none;
+    opacity:0.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--amber); color:var(--void);}
+
+  ::-webkit-scrollbar{width:10px; height:10px;}
+  ::-webkit-scrollbar-track{background:var(--void);}
+  ::-webkit-scrollbar-thumb{background:linear-gradient(var(--amber), var(--orange)); border-radius:6px; border:2px solid var(--void);}
+  html{scrollbar-color:var(--amber) var(--void); scrollbar-width:thin;}
+
+  /* cursor-reactive glow */
+  #cursorGlow{
+    position:fixed; inset:0; z-index:2; pointer-events:none;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(255,178,56,0.06), transparent 70%);
+    transition:opacity .3s ease; opacity:0;
+  }
+  body:hover #cursorGlow{opacity:1;}
+
+  #net{position:fixed; inset:0; z-index:0; opacity:0.55;}
+  .veil{position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 0%, rgba(23,15,12,0) 0%, var(--void) 82%);}
+
+  nav, main, footer{position:relative; z-index:2;}
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(23,15,12,0.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding:16px 6vw;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .logo{display:flex; align-items:center; gap:10px; font-weight:600; font-size:1rem;}
+  .logo-dot{width:9px; height:9px; border-radius:50%; background:var(--ok); box-shadow:0 0 8px var(--ok); animation:pulseDot 2s ease-in-out infinite;}
+  @keyframes pulseDot{0%,100%{opacity:1;} 50%{opacity:.4;}}
+  .badge{
+    display:flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem; color:var(--ok);
+    border:1px solid rgba(123,226,138,0.35); padding:6px 12px; border-radius:100px;
+    background:rgba(123,226,138,0.06);
+  }
+  nav ul{list-style:none; display:flex; gap:2.1rem; align-items:center;}
+  nav a{text-decoration:none; font-size:0.9rem; color:var(--muted); transition:color .15s; position:relative; padding-bottom:3px;}
+  nav a::after{
+    content:''; position:absolute; left:0; bottom:0; width:100%; height:1.5px;
+    background:linear-gradient(90deg, var(--amber), var(--orange));
+    transform:scaleX(0); transform-origin:left; transition:transform .25s ease;
+  }
+  nav a:hover{color:var(--text);}
+  nav a:hover::after{transform:scaleX(1);}
+
+  header.hero{padding:7vw 6vw 4vw; max-width:1180px; position:relative; overflow:hidden;}
+  .aurora{
+    position:absolute; top:-180px; left:50%; width:900px; height:500px;
+    transform:translateX(-50%);
+    background:
+      radial-gradient(closest-side, rgba(255,178,56,0.16), transparent),
+      radial-gradient(closest-side, rgba(76,227,214,0.10), transparent) ;
+    background-repeat:no-repeat;
+    background-position:30% 40%, 70% 60%;
+    background-size:60% 60%, 55% 55%;
+    filter:blur(10px);
+    animation:auroraDrift 14s ease-in-out infinite alternate;
+    pointer-events:none; z-index:0;
+  }
+  @keyframes auroraDrift{
+    0%{background-position:30% 40%, 70% 60%;}
+    100%{background-position:38% 48%, 62% 50%;}
+  }
+  .bracket{position:absolute; width:22px; height:22px; border:2px solid var(--line-strong); z-index:1;}
+  .bracket.tl{top:14px; left:6vw; border-right:none; border-bottom:none;}
+  .bracket.tr{top:14px; right:6vw; border-left:none; border-bottom:none;}
+  .bracket.bl{bottom:14px; left:6vw; border-right:none; border-top:none;}
+  .bracket.br{bottom:14px; right:6vw; border-left:none; border-top:none;}
+
+  .hero-top{display:flex; align-items:center; gap:1.1rem; margin-bottom:2rem; position:relative; z-index:1;}
+  .avatar{
+    width:58px; height:58px; border-radius:50%; flex-shrink:0;
+    background:conic-gradient(from 210deg, var(--amber), var(--orange), var(--cyan), var(--amber));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 26px rgba(255,178,56,0.3);
+    animation:avatarSpin 8s linear infinite;
+  }
+  @keyframes avatarSpin{to{filter:hue-rotate(18deg);}}
+  .avatar span{
+    width:50px; height:50px; border-radius:50%; background:var(--void);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-weight:600; color:var(--amber); font-size:1rem;
+  }
+  .prompt{font-family:'JetBrains Mono', monospace; font-size:0.84rem; color:var(--cyan); display:flex; align-items:center; gap:2px;}
+  .prompt .caret{display:inline-block; width:8px; height:1.1em; background:var(--cyan); margin-left:4px; animation:blink 1s step-end infinite;}
+  @keyframes blink{0%,49%{opacity:1;} 50%,100%{opacity:0;}}
+
+  h1.headline{font-size:clamp(2.3rem, 5vw, 3.7rem); font-weight:700; line-height:1.12; max-width:18ch; letter-spacing:-0.01em; position:relative; z-index:1;}
+  h1.headline .grad{
+    background:linear-gradient(100deg, var(--amber), var(--orange), var(--amber));
+    background-size:200% auto;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:gradShift 5s ease-in-out infinite;
+  }
+  @keyframes gradShift{0%,100%{background-position:0% center;} 50%{background-position:100% center;}}
+  .hero-sub{margin-top:1.5rem; max-width:58ch; color:var(--muted); font-size:1.06rem; position:relative; z-index:1;}
+
+  .instruments{margin-top:3.6rem; padding-top:2.2rem; border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4, 1fr); gap:1.6rem; position:relative; z-index:1;}
+  .instrument{
+    border:1px solid var(--line); background:rgba(255,178,56,0.02);
+    padding:1.1rem 1.1rem 1.3rem; display:flex; flex-direction:column; align-items:center;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .instrument:hover{transform:translateY(-4px); border-color:var(--line-strong); box-shadow:0 12px 28px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,178,56,0.15);}
+  .gauge-svg{width:100%; max-width:150px; height:auto;}
+  .gauge-track{fill:none; stroke:var(--line-strong); stroke-width:8; stroke-linecap:round;}
+  .gauge-fill{fill:none; stroke-width:8; stroke-linecap:round; stroke-dasharray:157; stroke-dashoffset:157; transition:stroke-dashoffset 1.5s cubic-bezier(.16,.84,.44,1);}
+  .instrument.in-view .gauge-fill{stroke-dashoffset:var(--off);}
+  .gauge-readout{margin-top:-1.6rem; font-size:1.5rem; font-weight:600;}
+  .digital{width:100%; max-width:150px; padding:0.9rem 0.6rem; background:#14100C; border:1px solid rgba(255,178,56,0.35); text-align:center; box-shadow:inset 0 0 14px rgba(255,178,56,0.08);}
+  .digital .digi-num{color:var(--amber); font-size:1.7rem; text-shadow:0 0 8px rgba(255,178,56,0.5);}
+  .inst-label{margin-top:0.75rem; font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--muted); text-align:center;}
+
+  section{padding:5.5vw 6vw; max-width:1200px;}
+  .section-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:2.6rem; position:relative;}
+  .section-head::after{
+    content:''; margin-left:0.4rem; height:1px; flex:1;
+    background:linear-gradient(90deg, var(--line-strong), transparent);
+    align-self:center;
+  }
+  .section-num{font-family:'JetBrains Mono', monospace; color:var(--amber); font-size:0.82rem; opacity:0.75;}
+  .section-head h2{font-size:1.5rem; font-weight:600;}
+
+  .about-grid{display:grid; grid-template-columns:1.05fr 1fr; gap:5vw; align-items:center;}
+  .about-text p{max-width:54ch; color:var(--muted); margin-bottom:1.1rem;}
+  .about-text p:first-child{color:var(--text); font-size:1.06rem;}
+  .fun-fact{
+    margin-top:1.4rem; padding:1rem 1.2rem; border-left:2px solid var(--amber);
+    background:rgba(255,178,56,0.05); font-size:0.92rem; color:var(--muted); max-width:52ch;
+  }
+  .radar-wrap{display:flex; flex-direction:column; align-items:center;}
+  .radar-caption{margin-top:1rem; font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--muted);}
+
+  .timeline{border-top:1px solid var(--line); padding-top:2.6rem; position:relative;}
+  .tl-row{display:grid; grid-template-columns:64px 1fr; gap:1.6rem; padding-bottom:3rem; position:relative;}
+  .tl-row:not(:last-child)::before{content:''; position:absolute; left:31px; top:64px; bottom:-1.4rem; width:4px; background:var(--line-strong);}
+  .station{
+    width:64px; height:64px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #3A281B, #20150F 70%);
+    border:2px solid var(--amber); box-shadow:0 0 14px rgba(255,178,56,0.35);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-weight:600; font-size:0.9rem; color:var(--amber);
+  }
+  .tl-content{padding-top:0.4rem;}
+  .tl-period{font-family:'JetBrains Mono', monospace; font-size:0.78rem; color:var(--muted);}
+  .tl-role{font-weight:600; font-size:1.06rem; margin-top:0.3rem;}
+  .tl-org{color:var(--cyan); font-size:0.9rem; margin-top:0.1rem; font-family:'JetBrains Mono', monospace;}
+  .tl-desc{margin-top:0.7rem; color:var(--muted); max-width:60ch; font-size:0.94rem;}
+
+  /* live process diagram */
+  .process-panel{
+    border:1px solid var(--line-strong); background:rgba(255,178,56,0.025);
+    padding:1.6rem 1.6rem 1.8rem; margin-bottom:2.6rem;
+    box-shadow:0 20px 44px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.03);
+    transition:box-shadow .3s ease, border-color .3s ease;
+  }
+  .process-panel:hover{border-color:var(--line-strong); box-shadow:0 24px 54px rgba(0,0,0,0.36), 0 0 0 1px rgba(255,178,56,0.1);}
+  .process-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; flex-wrap:wrap; gap:0.6rem;}
+  .process-title{font-weight:600; font-size:1.05rem;}
+  .process-svg{width:100%; height:auto; display:block; margin-top:0.6rem;}
+  .tank-liquid{transform-origin:center; animation:liquidWobble 3.4s ease-in-out infinite;}
+  @keyframes liquidWobble{0%,100%{transform:scaleY(1) translateY(0);} 50%{transform:scaleY(0.97) translateY(1.5px);}}
+  .vapor{animation:vaporRise 2.8s ease-in infinite; opacity:0;}
+  .vapor.v2{animation-delay:.7s;} .vapor.v3{animation-delay:1.4s;} .vapor.v4{animation-delay:2.1s;}
+  @keyframes vaporRise{0%{transform:translateY(0) scale(1); opacity:0;} 15%{opacity:0.7;} 100%{transform:translateY(-26px) scale(1.3); opacity:0;}}
+  .pipe-flow{stroke-dasharray:6 8; animation:flowDash 1s linear infinite;}
+  @keyframes flowDash{to{stroke-dashoffset:-28;}}
+  .packet-label{font-family:'JetBrains Mono', monospace; font-size:11px; fill:var(--muted);}
+  .process-desc{margin-top:1.1rem; color:var(--muted); font-size:0.92rem; max-width:70ch;}
+  @media (prefers-reduced-motion:reduce){
+    .tank-liquid, .vapor, .pipe-flow{animation:none !important;}
+  }
+
+  /* side project badge + heading */
+  .side-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--cyan);
+    border:1px solid rgba(76,227,214,0.35); padding:4px 11px; border-radius:100px;
+    background:rgba(76,227,214,0.06);
+  }
+  .side-heading{margin:3.6rem 0 1.2rem;}
+  .side-heading p{margin-top:0.5rem; color:var(--muted); font-size:0.94rem; max-width:60ch;}
+
+  /* tortilla line */
+  .flame{transform-origin:bottom center; animation:flameFlicker 0.6s ease-in-out infinite alternate;}
+  .flame.f2{animation-delay:.15s;} .flame.f3{animation-delay:.3s;} .flame.f4{animation-delay:.45s;}
+  @keyframes flameFlicker{0%{transform:scaleY(1) scaleX(1);} 100%{transform:scaleY(1.22) scaleX(0.9);}}
+  .belt-tread{stroke-dasharray:5 9; animation:beltMove 0.7s linear infinite;}
+  @keyframes beltMove{to{stroke-dashoffset:-28;}}
+  .ingredient-dot{animation:ingredFeed 1.8s ease-in infinite; opacity:0;}
+  .ingredient-dot.i2{animation-delay:.5s;} .ingredient-dot.i3{animation-delay:1s;}
+  @keyframes ingredFeed{0%{transform:translate(0,0); opacity:0;} 20%{opacity:1;} 100%{transform:translate(30px,10px); opacity:0;}}
+  .stop-flash{animation:stopFlash 0.9s ease-in-out infinite;}
+  @keyframes stopFlash{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+  .step-pill rect{transition:stroke .3s ease, fill .3s ease;}
+  .step-pill .step-badge{transition:stroke .3s ease, fill .3s ease;}
+  .step-pill .step-num, .step-pill .step-label{fill:var(--muted); transition:fill .3s ease;}
+  .step-pill.active rect{stroke:var(--amber);}
+  .step-pill.active .step-badge{fill:var(--amber); stroke:var(--amber);}
+  .step-pill.active .step-num{fill:var(--void); font-weight:600;}
+  .step-pill.active .step-label{fill:var(--text); font-weight:600;}
+  .step-pill.done rect{stroke:rgba(123,226,138,0.4);}
+  .step-pill.done .step-badge{fill:none; stroke:var(--ok);}
+  .step-pill.done .step-num{fill:var(--ok);}
+  .step-pill.done .step-label{fill:var(--muted);}
+  #batchCard rect:first-child{transition:stroke .4s ease;}
+  #batchCard.flash rect:first-child{stroke:var(--ok);}
+  @media (prefers-reduced-motion:reduce){
+    .flame, .belt-tread, .ingredient-dot, .stop-flash{animation:none !important;}
+  }
+
+  .projects-list{border-top:1px solid var(--line);}
+  .proj-row{
+    display:grid; grid-template-columns:1fr 230px; gap:2rem;
+    padding:2.2rem 1rem; margin:0 -1rem; border-bottom:1px solid var(--line);
+    align-items:center; transition:background .2s, transform .2s, box-shadow .25s ease;
+    border-left:2px solid transparent;
+  }
+  .proj-row:hover{background:rgba(255,178,56,0.045); transform:translateX(6px); border-left-color:var(--amber);}
+  .proj-status{display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;}
+  .led{width:7px; height:7px; border-radius:50%; box-shadow:0 0 6px currentColor; animation:ledBlink 2.4s ease-in-out infinite;}
+  .led.ok{background:var(--ok); color:var(--ok);}
+  .led.amber{background:var(--amber); color:var(--amber); animation-duration:1.5s;}
+  @keyframes ledBlink{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+  .status-text{font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--muted);}
+  .proj-title{font-weight:600; font-size:1.1rem;}
+  .proj-desc{margin-top:0.5rem; color:var(--muted); max-width:56ch; font-size:0.94rem;}
+  .proj-tags{margin-top:0.85rem; display:flex; gap:0.5rem; flex-wrap:wrap;}
+  .proj-tags span{font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--muted); border:1px solid var(--line-strong); padding:2px 9px; transition:border-color .2s ease, color .2s ease;}
+  .proj-row:hover .proj-tags span{border-color:rgba(255,178,56,0.4); color:var(--text);}
+  .spark{width:100%; height:60px; display:block;}
+  .spark path{stroke-dasharray:400; stroke-dashoffset:400; transition:stroke-dashoffset 1.6s cubic-bezier(.16,.84,.44,1);}
+  .proj-row.in-view .spark path{stroke-dashoffset:0;}
+
+  .cta-band{
+    margin:0 6vw; padding:3rem 3rem; border:1px solid var(--line-strong);
+    background:linear-gradient(120deg, rgba(255,178,56,0.08), rgba(76,227,214,0.05));
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;
+    box-shadow:0 20px 44px rgba(0,0,0,0.25);
+  }
+  .cta-band h3{font-size:1.4rem; font-weight:600; max-width:26ch;}
+  .cta-band p{margin-top:0.5rem; color:var(--muted); font-size:0.95rem; max-width:40ch;}
+  .cta-btn{
+    position:relative; overflow:hidden;
+    font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:600;
+    color:var(--void); background:linear-gradient(100deg, var(--amber), var(--orange));
+    padding:0.85rem 1.6rem; text-decoration:none; white-space:nowrap; display:inline-block;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .cta-btn::before{
+    content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent);
+    transform:skewX(-20deg); transition:left .6s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(255,178,56,0.3);}
+  .cta-btn:hover::before{left:130%;}
+
+  footer{padding:5vw 6vw 4vw; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:2rem;}
+  footer h2{font-size:1.85rem; font-weight:700; max-width:16ch; line-height:1.2;}
+  footer h2 .grad{background:linear-gradient(100deg, var(--amber), var(--orange)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .contact-links{display:flex; flex-direction:column; gap:0.65rem; align-items:flex-end;}
+  .contact-links a{text-decoration:none; font-family:'JetBrains Mono', monospace; font-size:0.9rem; color:var(--muted); border-bottom:1px solid transparent; transition:.15s;}
+  .contact-links a:hover{color:var(--amber); border-color:var(--amber);}
+  .foot-note{width:100%; margin-top:2.4rem; font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--muted); opacity:0.55; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;}
+
+  .leadpoint-mark{display:flex; align-items:center; gap:6px;}
+  .leadpoint-mark svg{flex-shrink:0;}
+  .leadpoint-mark .lp-text{
+    font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:0.09em;
+    font-size:0.72rem; color:var(--text); opacity:0.8;
+  }
+  .leadpoint-mark .lp-accent{color:var(--amber);}
+  nav .leadpoint-mark{
+    border-left:1px solid var(--line); padding-left:1.1rem; margin-left:0.2rem;
+  }
+  footer .leadpoint-mark{opacity:0.85;}
+
+  @media (max-width:760px){
+    .instruments{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr; gap:2.6rem;}
+    .proj-row{grid-template-columns:1fr;}
+    .cta-band{flex-direction:column; align-items:flex-start; margin:0 4vw; padding:2rem;}
+    footer{flex-direction:column; align-items:flex-start;}
+    .contact-links{align-items:flex-start;}
+    .bracket{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+
+<canvas id="net"></canvas>
+<div class="veil"></div>
+<div id="cursorGlow"></div>
+
+<nav>
+  <div class="logo"><span class="logo-dot"></span>ali hamza</div>
+  <ul>
+    <li class="badge"><span class="logo-dot" style="animation:pulseDot 1.6s ease-in-out infinite;"></span>Open to opportunities</li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li class="leadpoint-mark" title="Placed via Leadpoint">
+      <svg viewBox="0 0 20 20" width="15" height="15"><path d="M2,3 L13,7 L2,7 Z" fill="var(--amber)"/><path d="M2,7.6 L13,7 L2,17 Z" fill="var(--text)" opacity="0.75"/></svg>
+      <span class="lp-text">LEAD<span class="lp-accent">P</span>OINT</span>
+    </li>
+  </ul>
+</nav>
+
+<main>
+  <header class="hero">
+    <span class="bracket tl"></span><span class="bracket tr"></span>
+    <span class="bracket bl"></span><span class="bracket br"></span>
+
+    <div class="hero-top">
+      <div class="avatar"><span>AH</span></div>
+      <div class="prompt">&gt; now streaming: plant_sensor_network.live<span class="caret"></span></div>
+    </div>
+
+    <h1 class="headline">I turn shop-floor chaos into <span class="grad">signal</span> — and I genuinely love it.</h1>
+    <p class="hero-sub">Hi, I'm Ali. I'm a data scientist who's happiest on an actual factory floor, headphones on, chasing down why a sensor spiked at 3am. I build models and dashboards that maintenance techs are glad to open, not ones that get built once and forgotten.</p>
+
+    <div class="instruments">
+      <div class="instrument">
+        <svg class="gauge-svg" viewBox="0 0 120 68">
+          <path class="gauge-track" d="M10,62 A50,50 0 0 1 110,62"/>
+          <path class="gauge-fill" stroke="#FFB238" style="--off:27" d="M10,62 A50,50 0 0 1 110,62"/>
+        </svg>
+        <div class="gauge-readout mono">38%</div>
+        <div class="inst-label">unplanned downtime avoided</div>
+      </div>
+      <div class="instrument" style="justify-content:center;">
+        <div class="digital"><span class="digi-num mono">2,400+</span></div>
+        <div class="inst-label">sensors streaming live</div>
+      </div>
+      <div class="instrument" style="justify-content:center;">
+        <div class="digital"><span class="digi-num mono">6</span></div>
+        <div class="inst-label">plants instrumented</div>
+      </div>
+      <div class="instrument">
+        <svg class="gauge-svg" viewBox="0 0 120 68">
+          <path class="gauge-track" d="M10,62 A50,50 0 0 1 110,62"/>
+          <path class="gauge-fill" stroke="#4CE3D6" style="--off:16" d="M10,62 A50,50 0 0 1 110,62"/>
+        </svg>
+        <div class="gauge-readout mono">90%</div>
+        <div class="inst-label">model uptime, 12mo avg</div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-head"><span class="section-num mono">01</span><h2>About</h2></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>My background is finance-turned-manufacturing, so I care as much about whether a sensor reading is trustworthy as whether the model on top of it is clever. Plant data is noisy and mistimed way more often than any textbook admits — and I find that genuinely fun to untangle.</p>
+        <p>Recent work has centered on predictive maintenance — pulling vibration, temperature, and pressure telemetry off rolling mills and compressors and turning it into failure warnings that reach a technician's phone before the equipment does, not after.</p>
+        <p>I still walk the floor for every project I take on, because the best feature in my model is usually something a technician mentioned in passing.</p>
+        <div class="fun-fact mono">// true story: a mis-calibrated vibration sensor once had us chasing a "ghost fault" for two weeks. we found it. it was the sensor.</div>
+      </div>
+      <div class="radar-wrap">
+        <svg id="radar" width="320" height="320" viewBox="0 0 320 320"></svg>
+        <div class="radar-caption">skill signal strength</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head"><span class="section-num mono">02</span><h2>Experience</h2></div>
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="station">01</div>
+        <div class="tl-content">
+          <div class="tl-period mono">2026</div>
+          <div class="tl-role">Data Scientist — Industrial Automation Project</div>
+          <div class="tl-org">Gelita AG</div>
+          <div class="tl-desc">Came back to Gelita for a focused data science engagement on industrial system automation and machine optimization — separate from the earlier Power BI support work — and delivered a project with strong, measurable results.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="station">02</div>
+        <div class="tl-content">
+          <div class="tl-period mono">2025</div>
+          <div class="tl-role">Power BI Analyst</div>
+          <div class="tl-org">Malmö Stad</div>
+          <div class="tl-desc">Built and supported Power BI reporting for the City of Malmö, translating municipal data into dashboards non-technical stakeholders could use directly.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="station">03</div>
+        <div class="tl-content">
+          <div class="tl-period mono">2025</div>
+          <div class="tl-role">Power BI Analyst</div>
+          <div class="tl-org">FC Rosengård</div>
+          <div class="tl-desc">Delivered Power BI reporting for the club, turning operational and performance data into dashboards the club's staff could rely on day to day.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="station">04</div>
+        <div class="tl-content">
+          <div class="tl-period mono">2024 — 2025</div>
+          <div class="tl-role">Practicant — Production &amp; Power BI Support</div>
+          <div class="tl-org">Gelita AG</div>
+          <div class="tl-desc">Started on the production floor at Gelita and supported the team's Power BI reporting alongside it — the foundation for the industrial automation project that followed in 2026.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head"><span class="section-num mono">03</span><h2>Selected work</h2></div>
+
+    <div class="process-panel">
+      <div class="process-header">
+        <span class="process-title">Gelatine Drying Line — Live Moisture Monitor</span>
+        <span class="proj-status" style="margin-bottom:0;"><span class="led ok"></span><span class="status-text mono">RUNNING</span></span>
+      </div>
+      <svg class="process-svg" id="processDiagram" viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg">
+        <!-- guide path for packets, invisible -->
+        <path id="flowPath" d="M95,140 L330,140 L520,140 L765,140" fill="none" stroke="none"/>
+
+        <!-- pipe 1 -->
+        <line x1="140" y1="140" x2="325" y2="140" stroke="#3A2A1F" stroke-width="10" stroke-linecap="round"/>
+        <line class="pipe-flow" x1="140" y1="140" x2="325" y2="140" stroke="#FFB238" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- pipe 2 -->
+        <line x1="525" y1="140" x2="720" y2="140" stroke="#3A2A1F" stroke-width="10" stroke-linecap="round"/>
+        <line class="pipe-flow" x1="525" y1="140" x2="720" y2="140" stroke="#4CE3D6" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- feed tank -->
+        <g>
+          <rect x="40" y="70" width="100" height="105" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <clipPath id="tank1Clip"><rect x="42" y="72" width="96" height="101" rx="4"/></clipPath>
+          <g clip-path="url(#tank1Clip)">
+            <rect class="tank-liquid" x="42" y="110" width="96" height="63" fill="#E6A85C" opacity="0.55"/>
+          </g>
+          <text x="90" y="55" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Feed Tank</text>
+          <text x="90" y="195" text-anchor="middle" class="packet-label mono">40% moisture</text>
+        </g>
+
+        <!-- dryer -->
+        <g>
+          <rect x="330" y="60" width="195" height="120" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="427" y="52" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Dryer</text>
+          <g stroke="#FF6B4A" stroke-width="2" fill="none" stroke-linecap="round">
+            <path class="vapor v1" d="M355,60 q6,-10 0,-20" />
+            <path class="vapor v2" d="M385,60 q-5,-9 1,-19" />
+            <path class="vapor v3" d="M415,60 q6,-10 0,-20" />
+            <path class="vapor v4" d="M445,60 q-5,-9 1,-19" />
+            <path class="vapor v2" d="M475,60 q6,-10 0,-20" style="animation-delay:1.9s;" />
+            <path class="vapor v4" d="M500,60 q-5,-9 1,-19" style="animation-delay:.35s;" />
+          </g>
+        </g>
+
+        <!-- product tank -->
+        <g>
+          <rect x="720" y="70" width="100" height="105" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <clipPath id="tank2Clip"><rect x="722" y="72" width="96" height="101" rx="4"/></clipPath>
+          <g clip-path="url(#tank2Clip)">
+            <rect class="tank-liquid" x="722" y="132" width="96" height="41" fill="#C97A2E" opacity="0.75"/>
+          </g>
+          <text x="770" y="55" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Product Tank</text>
+          <text x="770" y="195" text-anchor="middle" class="packet-label mono">20% moisture</text>
+        </g>
+
+        <!-- animated packets injected by JS -->
+        <g id="packetLayer"></g>
+      </svg>
+      <div class="process-desc">A simplified view of the real pipeline: gelatine feedstock enters at roughly 40% moisture, moves through the dryer, and leaves the line around 20% — each moving marker represents a batch, with its live reading updating as it passes through.</div>
+    </div>
+
+    <div class="projects-list">
+      <div class="proj-row">
+        <div>
+          <div class="proj-status"><span class="led ok"></span><span class="status-text mono">2026 — GELITA AG</span></div>
+          <div class="proj-title">Industrial Automation &amp; Machine Optimization</div>
+          <div class="proj-desc">A focused data science engagement at Gelita on industrial system automation and machine optimization — separate from the earlier Power BI support work — that delivered strong, measurable results on the production line.</div>
+          <div class="proj-tags"><span>Industrial automation</span><span>Process optimization</span><span>Production data</span></div>
+        </div>
+        <svg class="spark" viewBox="0 0 220 60"><path d="M0,45 20,40 40,42 60,30 80,33 100,20 120,24 140,15 160,18 180,8 200,12 220,5" fill="none" stroke="#FFB238" stroke-width="2"/></svg>
+      </div>
+      <div class="proj-row">
+        <div>
+          <div class="proj-status"><span class="led ok"></span><span class="status-text mono">2025 — MALMÖ STAD</span></div>
+          <div class="proj-title">City Operations Reporting</div>
+          <div class="proj-desc">Power BI reporting built for the City of Malmö, turning municipal data into dashboards that non-technical stakeholders could open and actually use.</div>
+          <div class="proj-tags"><span>Power BI</span><span>DAX</span><span>Public sector data</span></div>
+        </div>
+        <svg class="spark" viewBox="0 0 220 60"><path d="M0,10 20,15 40,12 60,22 80,18 100,28 120,24 140,35 160,30 180,40 200,36 220,45" fill="none" stroke="#4CE3D6" stroke-width="2"/></svg>
+      </div>
+      <div class="proj-row">
+        <div>
+          <div class="proj-status"><span class="led ok"></span><span class="status-text mono">2025 — FC ROSENGÅRD</span></div>
+          <div class="proj-title">Club Operations Dashboard</div>
+          <div class="proj-desc">Power BI reporting for FC Rosengård, consolidating operational and performance data into dashboards the club's staff relied on day to day.</div>
+          <div class="proj-tags"><span>Power BI</span><span>Sports operations data</span></div>
+        </div>
+        <svg class="spark" viewBox="0 0 220 60"><path d="M0,20 20,28 40,18 60,25 80,15 100,30 120,22 140,10 160,16 180,9 200,14 220,6" fill="none" stroke="#FF6B4A" stroke-width="2"/></svg>
+      </div>
+    </div>
+
+    <div class="side-heading">
+      <span class="side-badge"><span class="logo-dot" style="background:var(--cyan); box-shadow:0 0 8px var(--cyan);"></span>Personal project — built in my free time</span>
+      <p>A tortilla production line, simulated end to end: I wanted to see whether the same anomaly-detection and downtime-tracking thinking from my day job — stop time, bad batches, oven temperature — held up on a completely different process.</p>
+    </div>
+
+    <div class="process-panel">
+      <div class="process-header">
+        <span class="process-title">Tortilla Line — Downtime &amp; Quality Monitor</span>
+        <span class="proj-status" id="tortillaStatusWrap" style="margin-bottom:0;"><span class="led ok" id="tortillaLed"></span><span class="status-text mono" id="tortillaStatusText">RUNNING</span></span>
+      </div>
+      <svg class="process-svg" id="tortillaDiagram" viewBox="0 0 1200 390" xmlns="http://www.w3.org/2000/svg">
+        <path id="tortillaPath" d="M210,150 L800,150" fill="none" stroke="none"/>
+
+        <!-- belt -->
+        <line x1="90" y1="150" x2="800" y2="150" stroke="#3A2A1F" stroke-width="10" stroke-linecap="round"/>
+        <line class="belt-tread" x1="90" y1="150" x2="800" y2="150" stroke="#8B93A3" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- ingredients feed -->
+        <g>
+          <text x="45" y="105" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Ingredients</text>
+          <circle class="ingredient-dot" cx="30" cy="115" r="3.5" fill="#E8ECF2"/>
+          <circle class="ingredient-dot i2" cx="30" cy="120" r="3.5" fill="#4CE3D6"/>
+          <circle class="ingredient-dot i3" cx="30" cy="125" r="3.5" fill="#FFB238"/>
+        </g>
+
+        <!-- mix & press -->
+        <g>
+          <rect x="75" y="105" width="140" height="90" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="145" y="97" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Mix &amp; Press</text>
+        </g>
+
+        <!-- oven -->
+        <g id="ovenGroup">
+          <rect x="255" y="90" width="215" height="120" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="362" y="82" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Oven</text>
+          <g stroke="#FF6B4A" stroke-width="3" fill="none" stroke-linecap="round">
+            <path class="flame f1" d="M295,208 q-5,-16 0,-24 q5,8 0,24" fill="#FF6B4A" stroke="none"/>
+            <path class="flame f2" d="M335,208 q-5,-16 0,-24 q5,8 0,24" fill="#FFB238" stroke="none"/>
+            <path class="flame f3" d="M395,208 q-5,-16 0,-24 q5,8 0,24" fill="#FFB238" stroke="none"/>
+            <path class="flame f4" d="M435,208 q-5,-16 0,-24 q5,8 0,24" fill="#FF6B4A" stroke="none"/>
+          </g>
+        </g>
+
+        <!-- oven temp gauge -->
+        <g transform="translate(310,20)">
+          <svg viewBox="0 0 120 68" width="110" height="62" x="0" y="0">
+            <path class="gauge-track" d="M10,62 A50,50 0 0 1 110,62"/>
+            <path id="ovenGaugeFill" stroke="#FFB238" stroke-width="8" stroke-linecap="round" fill="none" stroke-dasharray="157" stroke-dashoffset="60" d="M10,62 A50,50 0 0 1 110,62"/>
+          </svg>
+          <text id="ovenTempReadout" x="55" y="46" text-anchor="middle" class="packet-label mono" fill="var(--text)" font-size="13" font-weight="600">220°C</text>
+        </g>
+
+        <!-- cooling -->
+        <g>
+          <rect x="500" y="105" width="130" height="90" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="565" y="97" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Cooling</text>
+        </g>
+
+        <!-- pack -->
+        <g>
+          <rect x="660" y="105" width="140" height="90" rx="6" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="730" y="97" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Pack</text>
+        </g>
+
+        <!-- reject bin -->
+        <g>
+          <path d="M600,215 L640,215 L634,240 L606,240 Z" fill="none" stroke="var(--orange)" stroke-width="2"/>
+          <text x="620" y="253" text-anchor="middle" class="packet-label mono" fill="var(--orange)" font-size="10">Rejected</text>
+        </g>
+
+        <!-- live counters -->
+        <text x="1180" y="30" text-anchor="end" class="packet-label mono" id="rejectCount" fill="var(--orange)" font-size="12">Rejected: 0</text>
+        <text x="1180" y="46" text-anchor="end" class="packet-label mono" id="stopCount" fill="var(--muted)" font-size="12">Stops today: 0</text>
+        <text x="450" y="235" text-anchor="middle" class="packet-label mono stop-flash" id="stopBanner" fill="var(--orange)" font-size="13" font-weight="600" opacity="0">LINE STOPPED</text>
+
+        <!-- section divider -->
+        <line x1="40" y1="222" x2="1160" y2="222" stroke="var(--line)" stroke-width="1"/>
+        <text x="40" y="216" class="packet-label mono" fill="var(--muted)" font-size="10">PACKING &amp; SHIPPING — ONE BATCH AT A TIME</text>
+
+        <!-- connector from pack station down to shipping row -->
+        <line x1="730" y1="195" x2="730" y2="222" stroke="#3A2A1F" stroke-width="8" stroke-linecap="round"/>
+        <line class="pipe-flow" x1="730" y1="195" x2="730" y2="222" stroke="#FFB238" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- batch schedule stepper -->
+        <g id="stepper">
+          <g class="step-pill" data-i="0" transform="translate(60,236)">
+            <rect width="118" height="28" rx="14" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <circle class="step-badge" cx="16" cy="14" r="9" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <text class="step-num packet-label mono" x="16" y="18" text-anchor="middle" font-size="10">1</text>
+            <text class="step-label packet-label mono" x="34" y="18" font-size="10">6-Pack</text>
+          </g>
+          <g class="step-pill" data-i="1" transform="translate(188,236)">
+            <rect width="118" height="28" rx="14" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <circle class="step-badge" cx="16" cy="14" r="9" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <text class="step-num packet-label mono" x="16" y="18" text-anchor="middle" font-size="10">2</text>
+            <text class="step-label packet-label mono" x="34" y="18" font-size="10">12-Pack</text>
+          </g>
+          <g class="step-pill" data-i="2" transform="translate(316,236)">
+            <rect width="128" height="28" rx="14" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <circle class="step-badge" cx="16" cy="14" r="9" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <text class="step-num packet-label mono" x="16" y="18" text-anchor="middle" font-size="10">3</text>
+            <text class="step-label packet-label mono" x="34" y="18" font-size="10">6-Pack Fullkorn</text>
+          </g>
+          <g class="step-pill" data-i="3" transform="translate(454,236)">
+            <rect width="134" height="28" rx="14" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <circle class="step-badge" cx="16" cy="14" r="9" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <text class="step-num packet-label mono" x="16" y="18" text-anchor="middle" font-size="10">4</text>
+            <text class="step-label packet-label mono" x="34" y="18" font-size="10">12-Pack Fullkorn</text>
+          </g>
+        </g>
+
+        <!-- current batch card -->
+        <g id="batchCard">
+          <rect x="60" y="280" width="528" height="80" rx="6" fill="rgba(255,178,56,0.02)" stroke="var(--line-strong)" stroke-width="1.5"/>
+          <text id="batchName" x="76" y="303" class="packet-label" fill="var(--text)" font-size="14" font-weight="600">6-Pack</text>
+          <g id="fullkornTag" opacity="0">
+            <rect x="148" y="291" width="72" height="17" rx="8.5" fill="rgba(123,226,138,0.12)" stroke="var(--ok)" stroke-width="1"/>
+            <text x="184" y="303.5" text-anchor="middle" class="packet-label mono" fill="var(--ok)" font-size="9">FULLKORN</text>
+          </g>
+          <text id="batchProgressText" x="572" y="303" text-anchor="end" class="packet-label mono" fill="var(--muted)" font-size="12">0 / 200</text>
+
+          <rect x="76" y="314" width="436" height="8" rx="4" fill="none" stroke="var(--line-strong)" stroke-width="1"/>
+          <rect id="batchProgressFill" x="78" y="316" width="0" height="4" rx="2" fill="#FFB238"/>
+
+          <text x="76" y="343" class="packet-label mono" fill="var(--muted)" font-size="10">current carton</text>
+          <rect x="176" y="336" width="140" height="7" rx="3.5" fill="none" stroke="var(--line-strong)" stroke-width="1"/>
+          <rect id="batchCartonFill" x="178" y="337.5" width="0" height="4" rx="2" fill="#FFB238"/>
+          <text id="batchCartonText" x="326" y="343" class="packet-label mono" fill="var(--muted)" font-size="10">0/5</text>
+        </g>
+
+        <!-- connector to truck -->
+        <line x1="588" y1="318" x2="960" y2="318" stroke="#3A2A1F" stroke-width="8" stroke-linecap="round"/>
+        <line class="pipe-flow" x1="588" y1="318" x2="960" y2="318" stroke="#4CE3D6" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- truck -->
+        <g id="truckGroup">
+          <text x="1085" y="282" text-anchor="middle" class="packet-label" fill="var(--text)" font-size="12" font-weight="600">Truck</text>
+          <rect x="960" y="292" width="170" height="58" rx="4" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <rect x="1130" y="304" width="38" height="40" rx="4" fill="none" stroke="var(--line-strong)" stroke-width="2"/>
+          <circle cx="995" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" stroke-width="2"/>
+          <circle cx="1100" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" stroke-width="2"/>
+          <circle cx="1150" cy="352" r="8" fill="#20150F" stroke="var(--line-strong)" stroke-width="2"/>
+          <g id="truckBed"></g>
+        </g>
+        <text id="truckLoadCount" x="1045" y="374" text-anchor="middle" class="packet-label mono">Loaded: 0 / 6</text>
+        <text id="truckDispatchCount" x="1180" y="374" text-anchor="end" class="packet-label mono">Trucks out: 0</text>
+
+        <g id="tortillaLayer"></g>
+      </svg>
+      <div class="process-desc">Every disc on the belt is a batch: it starts pale, browns as it passes through the oven, and — for the odd unlucky one — gets flagged and pulled off the line before packing. The line runs one product at a time — 6-packs, then 12-packs, then 6-pack and 12-pack Fullkorn — filling cartons as it goes and cycling through the schedule before loading the truck for dispatch. The belt also stops at random, the way a real line does, and every counter keeps score.</div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div>
+      <h3>Hiring for a plant floor that needs better signal?</h3>
+      <p>I'm actively looking for my next role — ideally somewhere with real machines, real sensors, and a team that wants to trust its data.</p>
+    </div>
+    <a class="cta-btn" href="mailto:ali.hamza@leadpoint.se">Say hello →</a>
+  </div>
+</main>
+
+<footer id="contact">
+  <h2>Let's put a model on your plant floor.</h2>
+  <div class="contact-links">
+    <a href="mailto:ali.hamza@leadpoint.se">ali.hamza@leadpoint.se</a>
+    <a href="https://www.linkedin.com/in/ali-hamza-b0a0242a4" target="_blank" rel="noopener">linkedin.com/in/ali-hamza</a>
+    <a href="https://github.com/DatascientistenAliHamza" target="_blank" rel="noopener">github.com/DatascientistenAliHamza</a>
+  </div>
+  <div class="foot-note mono">
+    <span>// portfolio.html — last compiled 2026</span>
+    <span class="leadpoint-mark" title="Placed via Leadpoint">
+      <svg viewBox="0 0 20 20" width="15" height="15"><path d="M2,3 L13,7 L2,7 Z" fill="var(--amber)"/><path d="M2,7.6 L13,7 L2,17 Z" fill="var(--text)" opacity="0.75"/></svg>
+      <span class="lp-text">LEAD<span class="lp-accent">P</span>OINT</span>
+    </span>
+  </div>
+</footer>
+
+<script>
+// ---------- lively spark/sensor network background ----------
+(function(){
+  const canvas = document.getElementById('net');
+  const ctx = canvas.getContext('2d');
+  let w, h, points;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const palette = ['76,227,214', '255,178,56', '255,107,74'];
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = Math.max(window.innerHeight, document.body.scrollHeight);
+    const count = Math.min(65, Math.floor((w*h)/30000));
+    points = Array.from({length: count}, () => ({
+      x: Math.random()*w, y: Math.random()*h,
+      vx: (Math.random()-0.5)*0.32, vy:(Math.random()-0.5)*0.32,
+      pulse: Math.random()*Math.PI*2,
+      color: palette[Math.floor(Math.random()*palette.length)]
+    }));
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    for(const p of points){
+      if(!reduced){ p.x += p.vx; p.y += p.vy; p.pulse += 0.03; }
+      if(p.x < 0 || p.x > w) p.vx *= -1;
+      if(p.y < 0 || p.y > h) p.vy *= -1;
+    }
+    for(let i=0;i<points.length;i++){
+      for(let j=i+1;j<points.length;j++){
+        const a = points[i], b = points[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        if(dist < 130){
+          ctx.strokeStyle = `rgba(255,178,56,${(1-dist/130)*0.14})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    for(const p of points){
+      const glow = reduced ? 1 : (0.5 + Math.sin(p.pulse)*0.5);
+      ctx.fillStyle = `rgba(${p.color},${0.4+glow*0.4})`;
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.8,0,Math.PI*2); ctx.fill();
+    }
+    if(!reduced) requestAnimationFrame(step);
+  }
+  step();
+})();
+
+// ---------- live process diagram: flowing moisture packets ----------
+(function(){
+  const pathEl = document.getElementById('flowPath');
+  const layer = document.getElementById('packetLayer');
+  if(!pathEl || !layer) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const totalLength = pathEl.getTotalLength();
+  const ns = 'http://www.w3.org/2000/svg';
+  const duration = 6000; // ms per full pass
+  const packetCount = 3;
+
+  // dryer zone in path-length terms (approx, based on path geometry)
+  const dryerStartFrac = 0.34;
+  const dryerEndFrac = 0.62;
+
+  const packets = Array.from({length: packetCount}, (_, i) => {
+    const g = document.createElementNS(ns,'g');
+    const trail = [0,1,2,3].map(()=>{
+      const t = document.createElementNS(ns,'circle');
+      t.setAttribute('r','5'); t.setAttribute('fill','#FFB238');
+      layer.appendChild(t);
+      return t;
+    });
+    const circle = document.createElementNS(ns,'circle');
+    circle.setAttribute('r','6');
+    circle.setAttribute('fill','#FFB238');
+    circle.setAttribute('stroke','#170F0C');
+    circle.setAttribute('stroke-width','1.5');
+    const label = document.createElementNS(ns,'text');
+    label.setAttribute('class','packet-label mono');
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('y','-12');
+    label.setAttribute('fill','#FBF3EA');
+    label.setAttribute('font-size','11');
+    g.appendChild(circle); g.appendChild(label);
+    layer.appendChild(g);
+    return { g, label, circle, trail, hist: [], offset: i / packetCount };
+  });
+
+  function moistureFor(frac){
+    if(frac < dryerStartFrac) return 40;
+    if(frac > dryerEndFrac) return 20;
+    const local = (frac - dryerStartFrac) / (dryerEndFrac - dryerStartFrac);
+    return Math.round(40 - local*20);
+  }
+
+  if(reduced){
+    packets.forEach((p, i) => {
+      const frac = i / packetCount;
+      const pt = pathEl.getPointAtLength(frac*totalLength);
+      p.g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+      p.label.textContent = moistureFor(frac) + '%';
+      p.trail.forEach(t=>t.setAttribute('opacity','0'));
+    });
+    return;
+  }
+
+  function tick(now){
+    packets.forEach(p => {
+      const frac = ((now/duration) + p.offset) % 1;
+      const pt = pathEl.getPointAtLength(frac*totalLength);
+      const pulse = 6 + Math.sin(now/220)*0.8;
+      p.circle.setAttribute('r', pulse.toFixed(2));
+      p.g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+      p.label.textContent = moistureFor(frac) + '%';
+      const fade = frac < 0.04 ? frac/0.04 : (frac > 0.96 ? (1-frac)/0.04 : 1);
+      p.g.setAttribute('opacity', Math.max(0.15, fade));
+
+      // comet trail: remember recent points, draw fading circles behind
+      p.hist.unshift(pt);
+      if(p.hist.length > 12) p.hist.pop();
+      p.trail.forEach((t, i) => {
+        const histPt = p.hist[(i+1)*2];
+        if(histPt){
+          t.setAttribute('cx', histPt.x); t.setAttribute('cy', histPt.y);
+          t.setAttribute('r', Math.max(1.5, 5 - i*1.1));
+          t.setAttribute('opacity', Math.max(0, (0.32 - i*0.08) * fade));
+        } else {
+          t.setAttribute('opacity','0');
+        }
+      });
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ---------- tortilla line: belt, oven temp, defects, downtime ----------
+(function(){
+  const pathEl = document.getElementById('tortillaPath');
+  const layer = document.getElementById('tortillaLayer');
+  if(!pathEl || !layer) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ns = 'http://www.w3.org/2000/svg';
+  const totalLength = pathEl.getTotalLength();
+  const duration = 4400;
+  const discCount = 8;
+
+  const ovenStartFrac = 0.076, ovenEndFrac = 0.44;
+  const divertFrac = 0.71, divertWindow = 0.07;
+  const binX = 620, binY = 226;
+
+  const gaugeFill = document.getElementById('ovenGaugeFill');
+  const tempReadout = document.getElementById('ovenTempReadout');
+  const rejectText = document.getElementById('rejectCount');
+  const stopText = document.getElementById('stopCount');
+  const banner = document.getElementById('stopBanner');
+  const led = document.getElementById('tortillaLed');
+  const statusText = document.getElementById('tortillaStatusText');
+  const ovenGroup = document.getElementById('ovenGroup');
+
+  const batchNameEl = document.getElementById('batchName');
+  const fullkornTag = document.getElementById('fullkornTag');
+  const batchProgressText = document.getElementById('batchProgressText');
+  const batchProgressFill = document.getElementById('batchProgressFill');
+  const batchCartonFill = document.getElementById('batchCartonFill');
+  const batchCartonText = document.getElementById('batchCartonText');
+  const batchCard = document.getElementById('batchCard');
+  const stepPills = Array.from(document.querySelectorAll('.step-pill'));
+  const truckBed = document.getElementById('truckBed');
+  const truckLoadText = document.getElementById('truckLoadCount');
+  const truckDispatchText = document.getElementById('truckDispatchCount');
+  const truckGroupEl = document.getElementById('truckGroup');
+
+  const BATCH_TYPES = [
+    { label:'6-Pack',  size:6,  target:200, color:'#FFB238', fullkorn:false },
+    { label:'12-Pack', size:12, target:100, color:'#4CE3D6', fullkorn:false },
+    { label:'6-Pack',  size:6,  target:200, color:'#7BE28A', fullkorn:true  },
+    { label:'12-Pack', size:12, target:100, color:'#D99B5B', fullkorn:true  }
+  ];
+  const CARTON_CAP = 5, TRUCK_CAP = 6;
+  let batchIndex = 0;
+  let tortillasIntoPack = 0;
+  let batchProgress = 0;
+  let cartonProgress = 0;
+  let truckBedCount = 0, trucksDispatched = 0;
+  let truckState = 'idle', truckAnimStart = 0;
+  const bedSlots = [
+    [968,302],[1000,302],[1032,302],
+    [968,326],[1000,326],[1032,326]
+  ];
+
+  function updateStepper(){
+    stepPills.forEach(p => {
+      const i = parseInt(p.dataset.i, 10);
+      p.classList.remove('active','done');
+      if(i < batchIndex) p.classList.add('done');
+      else if(i === batchIndex) p.classList.add('active');
+    });
+  }
+
+  function updateBatchCard(){
+    const bt = BATCH_TYPES[batchIndex];
+    if(batchNameEl) batchNameEl.textContent = bt.label;
+    if(fullkornTag) fullkornTag.setAttribute('opacity', bt.fullkorn ? '1' : '0');
+    if(batchProgressText) batchProgressText.textContent = `${batchProgress} / ${bt.target}`;
+    if(batchProgressFill){
+      batchProgressFill.setAttribute('width', (432*batchProgress/bt.target).toFixed(1));
+      batchProgressFill.setAttribute('fill', bt.color);
+    }
+    if(batchCartonFill){
+      batchCartonFill.setAttribute('width', (136*cartonProgress/CARTON_CAP).toFixed(1));
+      batchCartonFill.setAttribute('fill', bt.color);
+    }
+    if(batchCartonText) batchCartonText.textContent = `${cartonProgress}/${CARTON_CAP}`;
+  }
+
+  function shipCarton(color){
+    if(truckBedCount >= TRUCK_CAP) return; // truck full, wait for next one
+    const slot = bedSlots[truckBedCount];
+    const sq = document.createElementNS(ns,'rect');
+    sq.setAttribute('x', slot[0]); sq.setAttribute('y', slot[1]);
+    sq.setAttribute('width','20'); sq.setAttribute('height','16'); sq.setAttribute('rx','2');
+    sq.setAttribute('fill', color); sq.setAttribute('opacity','0.85');
+    truckBed.appendChild(sq);
+    truckBedCount++;
+    if(truckLoadText) truckLoadText.textContent = `Loaded: ${truckBedCount} / ${TRUCK_CAP}`;
+    if(truckBedCount >= TRUCK_CAP && truckState === 'idle'){
+      truckState = 'depart'; truckAnimStart = performance.now();
+    }
+  }
+
+  function updateTruck(now){
+    if(truckState === 'depart'){
+      const t = Math.min(1, (now-truckAnimStart)/1100);
+      truckGroupEl.setAttribute('transform', `translate(${t*280},0)`);
+      truckGroupEl.setAttribute('opacity', 1 - t*0.92);
+      if(t >= 1){
+        while(truckBed.firstChild) truckBed.removeChild(truckBed.firstChild);
+        truckBedCount = 0; trucksDispatched++;
+        if(truckLoadText) truckLoadText.textContent = `Loaded: 0 / ${TRUCK_CAP}`;
+        if(truckDispatchText) truckDispatchText.textContent = `Trucks out: ${trucksDispatched}`;
+        truckGroupEl.setAttribute('transform', 'translate(-280,0)');
+        truckGroupEl.setAttribute('opacity', '1');
+        truckState = 'return'; truckAnimStart = now;
+      }
+    } else if(truckState === 'return'){
+      const t = Math.min(1, (now-truckAnimStart)/900);
+      truckGroupEl.setAttribute('transform', `translate(${-280 + t*280},0)`);
+      if(t >= 1){ truckState = 'idle'; truckGroupEl.setAttribute('transform','translate(0,0)'); }
+    }
+  }
+
+  function packArrival(){
+    const bt = BATCH_TYPES[batchIndex];
+    tortillasIntoPack++;
+    if(tortillasIntoPack < bt.size) return;
+    tortillasIntoPack = 0;
+
+    const inc = 6 + Math.floor(Math.random()*4); // 6–9 per completed pack, keeps a 200-target batch watchable
+    batchProgress = Math.min(bt.target, batchProgress + inc);
+    cartonProgress++;
+    if(cartonProgress >= CARTON_CAP){
+      cartonProgress = 0;
+      shipCarton(bt.color);
+    }
+    updateBatchCard();
+
+    if(batchProgress >= bt.target){
+      if(batchCard){
+        batchCard.classList.add('flash');
+        setTimeout(() => batchCard.classList.remove('flash'), 650);
+      }
+      batchIndex = (batchIndex + 1) % BATCH_TYPES.length;
+      tortillasIntoPack = 0; batchProgress = 0; cartonProgress = 0;
+      updateStepper();
+      updateBatchCard();
+    }
+  }
+  updateStepper();
+  updateBatchCard();
+
+  const dough = [230,210,170], gold = [198,142,58], burnt = [118,55,32];
+  function lerpC(a,b,t){ return a.map((v,i)=>Math.round(v+(b[i]-v)*t)); }
+  function colorFor(frac, isDefect){
+    const target = isDefect ? burnt : gold;
+    if(frac < ovenStartFrac) return dough;
+    if(frac > ovenEndFrac) return target;
+    const t = (frac-ovenStartFrac)/(ovenEndFrac-ovenStartFrac);
+    return lerpC(dough, target, t);
+  }
+
+  let rejectCount = 0, stopCount = 0;
+
+  const discs = Array.from({length: discCount}, (_, i) => {
+    const g = document.createElementNS(ns,'g');
+    const circle = document.createElementNS(ns,'circle');
+    circle.setAttribute('r','9'); circle.setAttribute('stroke','#170F0C'); circle.setAttribute('stroke-width','1.5');
+    const warn = document.createElementNS(ns,'path');
+    warn.setAttribute('d','M0,-27 L6,-17 L-6,-17 Z');
+    warn.setAttribute('fill','var(--orange)'); warn.setAttribute('opacity','0');
+    g.appendChild(circle); g.appendChild(warn);
+    layer.appendChild(g);
+    return { g, circle, warn, offset: i/discCount, isDefect: Math.random() < 1/6, countedThisLap: false, arrivedThisLap: false, prevFrac: i/discCount };
+  });
+
+  if(reduced){
+    discs.forEach(d => {
+      const pt = pathEl.getPointAtLength(d.offset*totalLength);
+      d.g.setAttribute('transform', `translate(${pt.x},${pt.y})`);
+      const c = colorFor(d.offset, false);
+      d.circle.setAttribute('fill', `rgb(${c[0]},${c[1]},${c[2]})`);
+    });
+    if(tempReadout) tempReadout.textContent = '220°C';
+    return;
+  }
+
+  let lastNow = null, effectiveTime = 0, wasStopped = false;
+  const STOP_CYCLE = 18000, STOP_DURATION = 2200;
+
+  function tick(now){
+    const cyclePos = now % STOP_CYCLE;
+    const stopped = cyclePos < STOP_DURATION;
+
+    if(lastNow === null) lastNow = now;
+    const dt = now - lastNow; lastNow = now;
+    if(!stopped) effectiveTime += dt;
+
+    if(stopped !== wasStopped){
+      wasStopped = stopped;
+      if(stopped){
+        stopCount++;
+        if(stopText) stopText.textContent = `Stops today: ${stopCount}`;
+        if(banner) banner.setAttribute('opacity','1');
+        if(led){ led.classList.remove('ok'); led.classList.add('amber'); }
+        if(statusText) statusText.textContent = 'STOPPED';
+        if(ovenGroup) ovenGroup.setAttribute('opacity','0.55');
+      } else {
+        if(banner) banner.setAttribute('opacity','0');
+        if(led){ led.classList.remove('amber'); led.classList.add('ok'); }
+        if(statusText) statusText.textContent = 'RUNNING';
+        if(ovenGroup) ovenGroup.setAttribute('opacity','1');
+      }
+    }
+    if(stopped && banner){
+      const elapsed = Math.floor(cyclePos/1000) + 1;
+      banner.textContent = `LINE STOPPED — ${elapsed}s`;
+    }
+
+    // oven temperature: independent of belt state, the oven stays hot
+    const wobble = Math.sin(now/1300)*6;
+    const spikeCycle = now % 6500;
+    const isSpike = spikeCycle < 1500;
+    const spikeAmt = isSpike ? Math.sin((spikeCycle/1500)*Math.PI)*32 : 0;
+    const temp = 220 + wobble + spikeAmt;
+    const frac01 = Math.max(0, Math.min(1, (temp-190)/(260-190)));
+    if(gaugeFill){
+      gaugeFill.setAttribute('stroke-dashoffset', (157*(1-frac01)).toFixed(1));
+      gaugeFill.setAttribute('stroke', isSpike ? '#FF6B4A' : '#FFB238');
+    }
+    if(tempReadout) tempReadout.textContent = Math.round(temp) + '°C';
+
+    discs.forEach(d => {
+      const frac = ((effectiveTime/duration) + d.offset) % 1;
+      if(frac < d.prevFrac){ d.isDefect = Math.random() < 1/6; d.countedThisLap = false; d.arrivedThisLap = false; }
+      d.prevFrac = frac;
+
+      let x, y, opacity = 1, showWarn = false;
+      if(d.isDefect && frac > divertFrac){
+        const p0 = pathEl.getPointAtLength(divertFrac*totalLength);
+        if(frac < divertFrac + divertWindow){
+          const t = (frac-divertFrac)/divertWindow;
+          x = p0.x + (binX-p0.x)*t; y = p0.y + (binY-p0.y)*t;
+          opacity = 1; showWarn = true;
+          if(t > 0.97 && !d.countedThisLap){ rejectCount++; d.countedThisLap = true; if(rejectText) rejectText.textContent = `Rejected: ${rejectCount}`; }
+        } else {
+          opacity = 0;
+          if(!d.countedThisLap){ rejectCount++; d.countedThisLap = true; if(rejectText) rejectText.textContent = `Rejected: ${rejectCount}`; }
+        }
+      } else {
+        const pt = pathEl.getPointAtLength(frac*totalLength);
+        x = pt.x; y = pt.y;
+        const edgeFade = frac < 0.03 ? frac/0.03 : (frac > 0.985 ? (1-frac)/0.015 : 1);
+        opacity = Math.max(0.2, edgeFade);
+        showWarn = d.isDefect && frac > ovenEndFrac;
+        if(!d.isDefect && frac > 0.93 && !d.arrivedThisLap){
+          d.arrivedThisLap = true;
+          packArrival();
+        }
+      }
+
+      d.g.setAttribute('transform', `translate(${x},${y})`);
+      d.g.setAttribute('opacity', opacity);
+      const c = colorFor(frac, d.isDefect);
+      d.circle.setAttribute('fill', `rgb(${c[0]},${c[1]},${c[2]})`);
+      d.warn.setAttribute('opacity', showWarn ? 1 : 0);
+    });
+
+    updateTruck(now);
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ---------- scroll reveal: gauges, sparklines ----------
+(function(){
+  const targets = document.querySelectorAll('.instrument, .proj-row');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+    });
+  }, {threshold:0.35});
+  targets.forEach(t=>obs.observe(t));
+})();
+
+// ---------- radar / skill chart ----------
+(function(){
+  const svg = document.getElementById('radar');
+  const skills = [
+    {name:'Python / ML', val:0.92},
+    {name:'SQL', val:0.88},
+    {name:'Power BI / DAX', val:0.93},
+    {name:'Time-series & sensors', val:0.9},
+    {name:'SCADA / OT data', val:0.8},
+    {name:'Statistics', val:0.75}
+  ];
+  const cx=160, cy=160, R=115;
+  const n = skills.length;
+  const ns = 'http://www.w3.org/2000/svg';
+
+  function pt(i, r){
+    const angle = (Math.PI*2*i/n) - Math.PI/2;
+    return [cx + r*Math.cos(angle), cy + r*Math.sin(angle)];
+  }
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const ring = document.createElementNS(ns,'polygon');
+    ring.setAttribute('points', Array.from({length:n}, (_,i)=>pt(i, R*f).join(',')).join(' '));
+    ring.setAttribute('fill','none'); ring.setAttribute('stroke','rgba(255,193,133,0.18)');
+    svg.appendChild(ring);
+  });
+  skills.forEach((s,i)=>{
+    const [x,y] = pt(i, R);
+    const line = document.createElementNS(ns,'line');
+    line.setAttribute('x1',cx); line.setAttribute('y1',cy); line.setAttribute('x2',x); line.setAttribute('y2',y);
+    line.setAttribute('stroke','rgba(255,193,133,0.18)');
+    svg.appendChild(line);
+    const [lx,ly] = pt(i, R+26);
+    const label = document.createElementNS(ns,'text');
+    label.setAttribute('x',lx); label.setAttribute('y',ly);
+    label.setAttribute('text-anchor', Math.abs(lx-cx)<4 ? 'middle' : (lx>cx?'start':'end'));
+    label.setAttribute('dominant-baseline','middle');
+    label.setAttribute('fill','#C9B7A5'); label.setAttribute('font-size','10.5');
+    label.setAttribute('font-family','JetBrains Mono, monospace');
+    label.textContent = s.name;
+    svg.appendChild(label);
+  });
+  const poly = document.createElementNS(ns,'polygon');
+  const centerPts = Array.from({length:n}, ()=>`${cx},${cy}`).join(' ');
+  const targetPts = skills.map((s,i)=>pt(i, R*s.val).join(',')).join(' ');
+  poly.setAttribute('points', centerPts);
+  poly.setAttribute('fill','url(#radarFill)');
+  poly.setAttribute('stroke','#FFB238'); poly.setAttribute('stroke-width','1.5');
+  poly.style.transition = 'all 1.4s cubic-bezier(.16,.84,.44,1)';
+
+  const defs = document.createElementNS(ns,'defs');
+  const grad = document.createElementNS(ns,'linearGradient');
+  grad.setAttribute('id','radarFill'); grad.setAttribute('x1','0'); grad.setAttribute('y1','0'); grad.setAttribute('x2','1'); grad.setAttribute('y2','1');
+  const stop1 = document.createElementNS(ns,'stop'); stop1.setAttribute('offset','0%'); stop1.setAttribute('stop-color','#FFB238'); stop1.setAttribute('stop-opacity','0.35');
+  const stop2 = document.createElementNS(ns,'stop'); stop2.setAttribute('offset','100%'); stop2.setAttribute('stop-color','#4CE3D6'); stop2.setAttribute('stop-opacity','0.18');
+  grad.appendChild(stop1); grad.appendChild(stop2); defs.appendChild(grad);
+  svg.appendChild(defs); svg.appendChild(poly);
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        if(reduced){ poly.setAttribute('points', targetPts); }
+        else { requestAnimationFrame(()=> poly.setAttribute('points', targetPts)); }
+        obs.unobserve(en.target);
+      }
+    });
+  }, {threshold:0.4});
+  obs.observe(svg);
+})();
+// ---------- cursor-reactive glow ----------
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced || window.matchMedia('(pointer: coarse)').matches) return;
+  let raf = null, mx = 0, my = 0;
+  window.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    if(raf) return;
+    raf = requestAnimationFrame(() => {
+      document.body.style.setProperty('--mx', mx + 'px');
+      document.body.style.setProperty('--my', my + 'px');
+      raf = null;
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
