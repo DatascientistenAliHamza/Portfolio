@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/language";
+import { content } from "@/content/site";
 
 const NS = "http://www.w3.org/2000/svg";
 
@@ -55,6 +57,13 @@ export default function TortillaLine() {
   const truckLoadTextRef = useRef<SVGTextElement>(null);
   const truckDispatchTextRef = useRef<SVGTextElement>(null);
   const truckGroupRef = useRef<SVGGElement>(null);
+
+  const { lang } = useLanguage();
+  const t = content[lang].projects.tortilla;
+  const labelsRef = useRef(t);
+  useEffect(() => {
+    labelsRef.current = t;
+  }, [t]);
 
   useEffect(() => {
     const pathEl = pathRef.current;
@@ -278,7 +287,7 @@ export default function TortillaLine() {
               ledRef.current.classList.remove("ok");
               ledRef.current.classList.add("amber");
             }
-            if (statusTextRef.current) statusTextRef.current.textContent = "STOPPED";
+            if (statusTextRef.current) statusTextRef.current.textContent = labelsRef.current.statusStopped;
             if (ovenGroupRef.current) ovenGroupRef.current.setAttribute("opacity", "0.55");
           } else {
             if (bannerRef.current) bannerRef.current.setAttribute("opacity", "0");
@@ -286,13 +295,13 @@ export default function TortillaLine() {
               ledRef.current.classList.remove("amber");
               ledRef.current.classList.add("ok");
             }
-            if (statusTextRef.current) statusTextRef.current.textContent = "RUNNING";
+            if (statusTextRef.current) statusTextRef.current.textContent = labelsRef.current.statusRunning;
             if (ovenGroupRef.current) ovenGroupRef.current.setAttribute("opacity", "1");
           }
         }
         if (stopped && bannerRef.current) {
           const elapsed = Math.floor(cyclePos / 1000) + 1;
-          bannerRef.current.textContent = `LINE STOPPED — ${elapsed}s`;
+          bannerRef.current.textContent = `${labelsRef.current.lineStoppedLabel} (${elapsed}s)`;
         }
 
         const wobble = Math.sin(now / 1300) * 6;
@@ -380,11 +389,11 @@ export default function TortillaLine() {
   return (
     <div className="process-panel">
       <div className="process-header">
-        <span className="process-title">Tortilla Line — Downtime &amp; Quality Monitor</span>
+        <span className="process-title">{t.title}</span>
         <span className="proj-status" style={{ marginBottom: 0 }}>
           <span className="led ok" ref={ledRef} />
           <span className="status-text mono" ref={statusTextRef}>
-            RUNNING
+            {t.statusRunning}
           </span>
         </span>
       </div>
@@ -480,12 +489,12 @@ export default function TortillaLine() {
           fontWeight="600"
           opacity="0"
         >
-          LINE STOPPED
+          {t.lineStoppedLabel}
         </text>
 
         <line x1="40" y1="222" x2="1160" y2="222" stroke="var(--line)" strokeWidth="1" />
         <text x="40" y="216" className="packet-label mono" fill="var(--muted)" fontSize="10">
-          PACKING &amp; SHIPPING — ONE BATCH AT A TIME
+          {t.packingHeader}
         </text>
 
         <line x1="730" y1="195" x2="730" y2="222" stroke="#3A2A1F" strokeWidth="8" strokeLinecap="round" />
@@ -569,13 +578,7 @@ export default function TortillaLine() {
 
         <g ref={layerRef} />
       </svg>
-      <div className="process-desc">
-        Every disc on the belt is a batch: it starts pale, browns as it passes through the oven, and — for
-        the odd unlucky one — gets flagged and pulled off the line before packing. The line runs one
-        product at a time — 6-packs, then 12-packs, then 6-pack and 12-pack Fullkorn — filling cartons as
-        it goes and cycling through the schedule before loading the truck for dispatch. The belt also stops
-        at random, the way a real line does, and every counter keeps score.
-      </div>
+      <div className="process-desc">{t.desc}</div>
     </div>
   );
 }

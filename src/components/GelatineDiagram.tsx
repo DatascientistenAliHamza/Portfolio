@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/language";
+import { content } from "@/content/site";
 
 const NS = "http://www.w3.org/2000/svg";
 
 export default function GelatineDiagram() {
   const pathRef = useRef<SVGPathElement>(null);
   const layerRef = useRef<SVGGElement>(null);
+  const { lang } = useLanguage();
+  const t = content[lang].projects.gelatine;
 
   useEffect(() => {
     const pathEl = pathRef.current;
@@ -114,10 +118,10 @@ export default function GelatineDiagram() {
   return (
     <div className="process-panel">
       <div className="process-header">
-        <span className="process-title">Gelatine Drying Line — Live Moisture Monitor</span>
+        <span className="process-title">{t.title}</span>
         <span className="proj-status" style={{ marginBottom: 0 }}>
           <span className="led ok" />
-          <span className="status-text mono">RUNNING</span>
+          <span className="status-text mono">{t.status}</span>
         </span>
       </div>
       <svg className="process-svg" viewBox="0 0 900 230">
@@ -178,11 +182,7 @@ export default function GelatineDiagram() {
 
         <g ref={layerRef} />
       </svg>
-      <div className="process-desc">
-        A simplified view of the real pipeline: gelatine feedstock enters at roughly 40% moisture, moves
-        through the dryer, and leaves the line around 20% — each moving marker represents a batch, with
-        its live reading updating as it passes through.
-      </div>
+      <div className="process-desc">{t.desc}</div>
     </div>
   );
 }

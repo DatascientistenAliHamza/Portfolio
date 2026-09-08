@@ -2,9 +2,14 @@
 
 import { useState } from "react";
 import LeadpointMark from "./LeadpointMark";
+import LanguageToggle from "./LanguageToggle";
+import { useLanguage } from "@/lib/language";
+import { content } from "@/content/site";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const { lang } = useLanguage();
+  const t = content[lang].nav;
 
   return (
     <nav>
@@ -15,7 +20,7 @@ export default function Nav() {
       <button
         type="button"
         className="nav-toggle"
-        aria-label="Toggle menu"
+        aria-label={t.toggleMenu}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       >
@@ -26,27 +31,30 @@ export default function Nav() {
       <ul className={open ? "open" : undefined}>
         <li className="badge">
           <span className="logo-dot" style={{ animation: "pulseDot 1.6s ease-in-out infinite" }} />
-          Open to opportunities
+          {t.badge}
         </li>
         <li>
           <a href="#about" onClick={() => setOpen(false)}>
-            About
+            {t.about}
           </a>
         </li>
         <li>
           <a href="#experience" onClick={() => setOpen(false)}>
-            Experience
+            {t.experience}
           </a>
         </li>
         <li>
           <a href="#projects" onClick={() => setOpen(false)}>
-            Projects
+            {t.projects}
           </a>
         </li>
         <li>
           <a href="#contact" onClick={() => setOpen(false)}>
-            Contact
+            {t.contact}
           </a>
+        </li>
+        <li>
+          <LanguageToggle />
         </li>
         <li>
           <LeadpointMark />

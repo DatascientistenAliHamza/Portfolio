@@ -1,13 +1,20 @@
+"use client";
+
 import GelatineDiagram from "./GelatineDiagram";
 import ProjectsList from "./ProjectsList";
 import TortillaLine from "./TortillaLine";
+import { useLanguage } from "@/lib/language";
+import { content } from "@/content/site";
 
 export default function Projects() {
+  const { lang } = useLanguage();
+  const t = content[lang].projects;
+
   return (
     <section id="projects">
       <div className="section-head">
-        <span className="section-num mono">03</span>
-        <h2>Selected work</h2>
+        <span className="section-num mono">{t.sectionNum}</span>
+        <h2>{t.title}</h2>
       </div>
 
       <GelatineDiagram />
@@ -16,13 +23,9 @@ export default function Projects() {
       <div className="side-heading">
         <span className="side-badge">
           <span className="logo-dot" style={{ background: "var(--cyan)", boxShadow: "0 0 8px var(--cyan)" }} />
-          Personal project — built in my free time
+          {t.sideBadge}
         </span>
-        <p>
-          A tortilla production line, simulated end to end: I wanted to see whether the same
-          anomaly-detection and downtime-tracking thinking from my day job — stop time, bad batches, oven
-          temperature — held up on a completely different process.
-        </p>
+        <p>{t.sideText}</p>
       </div>
 
       <TortillaLine />

@@ -18,7 +18,7 @@ export default function PowerBIShowcase({
 }: {
   title: string;
   filePrefix: string;
-  reports: PowerBIReport[];
+  reports: readonly PowerBIReport[];
 }) {
   const [active, setActive] = useState(0);
   const report = reports[active];
@@ -49,7 +49,7 @@ export default function PowerBIShowcase({
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-label mono">
-            {filePrefix}.pbix — {report.label}
+            {filePrefix}.pbix · {report.label}
           </span>
         </div>
         <Image
