@@ -198,14 +198,6 @@ export const content = {
             caption: "Budget against actual result and revenue for 2025, shown both month by month and accumulated across the year.",
           },
           {
-            id: "budget-dynamic",
-            label: "Budget vs Actual, Dynamic Year",
-            file: "/powerbi2/budget-dynamic.png",
-            alt: "Power BI report: budget vs actual for a dynamically selected year",
-            caption:
-              "The same budget vs actual view built to run on any selected year. The filters decide which year's result and revenue are compared against budget.",
-          },
-          {
             id: "yoy",
             label: "Year over Year",
             file: "/powerbi2/yoy-comparison.png",
@@ -440,14 +432,6 @@ export const content = {
             file: "/powerbi2/budget-2025.png",
             alt: "Power BI-rapport: budget mot faktiskt resultat och omsättning för 2025",
             caption: "Budget mot faktiskt resultat och omsättning för 2025, visat både månad för månad och ackumulerat över året.",
-          },
-          {
-            id: "budget-dynamic",
-            label: "Budget mot utfall, dynamiskt år",
-            file: "/powerbi2/budget-dynamic.png",
-            alt: "Power BI-rapport: budget mot utfall för ett dynamiskt valt år",
-            caption:
-              "Samma vy för budget mot utfall byggd för att köras på valfritt år. Filtren avgör vilket års resultat och omsättning som jämförs mot budget.",
           },
           {
             id: "yoy",
