@@ -639,45 +639,6 @@ section {
   display: block;
   margin-top: 0.6rem;
 }
-.tank-liquid {
-  transform-origin: center;
-  animation: liquidWobble 3.4s ease-in-out infinite;
-}
-@keyframes liquidWobble {
-  0%,
-  100% {
-    transform: scaleY(1) translateY(0);
-  }
-  50% {
-    transform: scaleY(0.97) translateY(1.5px);
-  }
-}
-.vapor {
-  animation: vaporRise 2.8s ease-in infinite;
-  opacity: 0;
-}
-.vapor.v2 {
-  animation-delay: 0.7s;
-}
-.vapor.v3 {
-  animation-delay: 1.4s;
-}
-.vapor.v4 {
-  animation-delay: 2.1s;
-}
-@keyframes vaporRise {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-26px) scale(1.3);
-    opacity: 0;
-  }
-}
 .pipe-flow {
   stroke-dasharray: 6 8;
   animation: flowDash 1s linear infinite;
@@ -699,8 +660,6 @@ section {
   max-width: 70ch;
 }
 @media (prefers-reduced-motion: reduce) {
-  .tank-liquid,
-  .vapor,
   .pipe-flow {
     animation: none !important;
   }

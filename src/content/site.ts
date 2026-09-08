@@ -71,11 +71,6 @@ export const content = {
     projects: {
       sectionNum: "03",
       title: "Selected work",
-      gelatine: {
-        title: "Live Moisture Monitor for an Industrial Drying Line",
-        status: "RUNNING",
-        desc: "A simplified view of a real production pipeline: feedstock enters at roughly 40% moisture, moves through the dryer, and leaves the line around 20%. Each moving marker represents a batch, with its live reading updating as it passes through.",
-      },
       rows: [
         {
           id: "row-1",
@@ -308,11 +303,6 @@ export const content = {
     projects: {
       sectionNum: "03",
       title: "Utvalda projekt",
-      gelatine: {
-        title: "Live fuktmätning för en industriell torklinje",
-        status: "IGÅNG",
-        desc: "En förenklad vy av en verklig produktionslinje: råmaterial kommer in vid cirka 40 procents fukthalt, går genom torken och lämnar linjen vid runt 20 procent. Varje rörlig markör representerar ett batch, med sin liveavläsning uppdaterad när den passerar igenom.",
-      },
       rows: [
         {
           id: "row-1",

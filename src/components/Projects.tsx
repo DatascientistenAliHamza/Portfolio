@@ -1,6 +1,5 @@
 "use client";
 
-import GelatineDiagram from "./GelatineDiagram";
 import ProjectsList from "./ProjectsList";
 import TortillaLine from "./TortillaLine";
 import { useLanguage } from "@/lib/language";
@@ -17,7 +16,6 @@ export default function Projects() {
         <h2>{t.title}</h2>
       </div>
 
-      <GelatineDiagram />
       <ProjectsList />
 
       <div className="side-heading">
