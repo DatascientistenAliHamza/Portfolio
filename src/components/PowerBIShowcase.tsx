@@ -5,6 +5,14 @@ import { useState } from "react";
 
 const REPORTS = [
   {
+    id: "overview",
+    label: "Overview",
+    file: "/powerbi/overview.png",
+    alt: "Power BI report: club-wide revenue overview across tickets, food, and merchandise",
+    caption:
+      "The landing view — total revenue, tickets, and food & merchandise sales at a glance, with revenue trended by month and broken out by payment source.",
+  },
+  {
     id: "tickets",
     label: "Tickets",
     file: "/powerbi/tickets.png",
@@ -71,7 +79,7 @@ export default function PowerBIShowcase() {
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-dot" />
-          <span className="pbi-frame-label mono">fc_leadpoint_report.pbix — {report.label}</span>
+          <span className="pbi-frame-label mono">leadpoint_sports_intelligence.pbix — {report.label}</span>
         </div>
         <Image
           key={report.id}
