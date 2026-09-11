@@ -15,10 +15,8 @@ const en = {
       headlinePost: ", and I genuinely love it.",
       sub: "Hi, I'm Ali. I'm a data scientist who's happiest on an actual factory floor, headphones on, chasing down why a sensor spiked at 3am. I build models and dashboards that maintenance techs are glad to open, not ones that get built once and forgotten.",
       instruments: [
-        { value: "38%", label: "unplanned downtime avoided" },
-        { value: "2,400+", label: "sensors streaming live" },
-        { value: "6", label: "plants instrumented" },
-        { value: "90%", label: "model uptime, 12 month average" },
+        { target: 47, suffix: "", label: "Power BI reports delivered across real engagements" },
+        { target: 100, suffix: "+", label: "software builds shipped, several running factory automation today" },
       ],
     },
     about: {
@@ -250,10 +248,8 @@ const sv = {
       headlinePost: ", och jag älskar det uppriktigt.",
       sub: "Hej, jag heter Ali. Jag är data scientist och trivs bäst ute på ett riktigt fabriksgolv, med hörlurarna på, och gräver gärna i varför en sensor gav utslag klockan tre på natten. Jag bygger modeller och dashboards som underhållstekniker faktiskt vill öppna, inte sådana som byggs en gång och sedan glöms bort.",
       instruments: [
-        { value: "38%", label: "oplanerat stillestånd undvikt" },
-        { value: "2 400+", label: "sensorer som strömmar live" },
-        { value: "6", label: "instrumenterade anläggningar" },
-        { value: "90%", label: "modelldrifttid, snitt över 12 månader" },
+        { target: 47, suffix: "", label: "Power BI-rapporter levererade i skarpa uppdrag" },
+        { target: 100, suffix: "+", label: "mjukvarubyggen levererade, flera i drift för fabriksautomation idag" },
       ],
     },
     about: {

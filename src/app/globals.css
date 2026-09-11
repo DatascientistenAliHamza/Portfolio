@@ -246,9 +246,9 @@ header.hero {
   position: absolute;
   top: -180px;
   left: 50%;
+  margin-left: -450px;
   width: 900px;
   height: 500px;
-  transform: translateX(-50%);
   background: radial-gradient(closest-side, rgba(255, 178, 56, 0.16), transparent),
     radial-gradient(closest-side, rgba(76, 227, 214, 0.1), transparent);
   background-repeat: no-repeat;
@@ -404,7 +404,7 @@ h1.headline .grad {
   padding-top: 2.2rem;
   border-top: 1px solid var(--line);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.6rem;
   position: relative;
   z-index: 1;
@@ -412,10 +412,10 @@ h1.headline .grad {
 .instrument {
   border: 1px solid var(--line);
   background: rgba(255, 178, 56, 0.02);
-  padding: 1.1rem 1.1rem 1.3rem;
+  padding: 1.6rem 1.4rem 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .instrument:hover {
@@ -423,53 +423,21 @@ h1.headline .grad {
   border-color: var(--line-strong);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 178, 56, 0.15);
 }
-.gauge-svg {
-  width: 100%;
-  max-width: 150px;
-  height: auto;
-}
-.gauge-track {
-  fill: none;
-  stroke: var(--line-strong);
-  stroke-width: 8;
-  stroke-linecap: round;
-}
-.gauge-fill {
-  fill: none;
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 157;
-  stroke-dashoffset: 157;
-  transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 0.84, 0.44, 1);
-}
-.instrument.in-view .gauge-fill {
-  stroke-dashoffset: var(--off);
-}
-.gauge-readout {
-  margin-top: -1.6rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-.digital {
-  width: 100%;
-  max-width: 150px;
-  padding: 0.9rem 0.6rem;
-  background: #14100c;
-  border: 1px solid rgba(255, 178, 56, 0.35);
-  text-align: center;
-  box-shadow: inset 0 0 14px rgba(255, 178, 56, 0.08);
-}
-.digital .digi-num {
+.kpi-num {
+  font-family: var(--font-jetbrains-mono), monospace;
   color: var(--amber);
-  font-size: 1.7rem;
-  text-shadow: 0 0 8px rgba(255, 178, 56, 0.5);
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(255, 178, 56, 0.35);
 }
 .inst-label {
   margin-top: 0.75rem;
   font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.72rem;
   color: var(--muted);
-  text-align: center;
+  text-align: left;
+  max-width: 32ch;
 }
 
 section {
@@ -1124,9 +1092,6 @@ footer .leadpoint-mark {
 }
 
 @media (max-width: 760px) {
-  .instruments {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .about-grid {
     grid-template-columns: 1fr;
     gap: 2.6rem;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { LanguageProvider } from "@/lib/language";
+import SmoothScroll from "@/lib/SmoothScroll";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -29,7 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </LanguageProvider>
       </body>
     </html>
   );
