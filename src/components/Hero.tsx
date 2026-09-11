@@ -42,7 +42,7 @@ export default function Hero() {
           return (
             <Reveal
               className="instrument"
-              key={inst.label}
+              key={i}
               style={isGauge ? undefined : { justifyContent: "center" }}
             >
               {isGauge ? (

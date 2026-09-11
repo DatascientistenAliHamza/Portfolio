@@ -1,6 +1,5 @@
-export const content = {
-  en: {
-    nav: {
+const en = {
+  nav: {
       badge: "Open to opportunities",
       about: "About",
       experience: "Experience",
@@ -104,6 +103,7 @@ export const content = {
         statusStopped: "STOPPED",
         lineStoppedLabel: "LINE STOPPED",
         packingHeader: "PACKING AND SHIPPING, ONE BATCH AT A TIME",
+        batchLabels: ["6-Pack", "12-Pack", "6-Pack Fullkorn", "12-Pack Fullkorn"],
         desc: "Every disc on the belt is a batch. It starts pale, browns as it passes through the oven, and for the odd unlucky one, gets flagged and pulled off the line before packing. The line runs one product at a time (six packs, then twelve packs, then six pack and twelve pack Fullkorn), filling cartons as it goes and cycling through the schedule before loading the truck for dispatch. The belt also stops at random, the way a real line does, and every counter keeps score.",
       },
     },
@@ -230,9 +230,11 @@ export const content = {
       headingPost: " on your plant floor.",
       footNote: "// portfolio.tsx, last compiled 2026",
     },
-  },
-  sv: {
-    nav: {
+  };
+export type SiteContent = typeof en;
+
+const sv = {
+  nav: {
       badge: "Öppen för nya möjligheter",
       about: "Om mig",
       experience: "Erfarenhet",
@@ -336,6 +338,7 @@ export const content = {
         statusStopped: "STOPPAD",
         lineStoppedLabel: "LINJEN STOPPAD",
         packingHeader: "PACKNING OCH LEVERANS, ETT BATCH I TAGET",
+        batchLabels: ["6-pack", "12-pack", "6-pack Fullkorn", "12-pack Fullkorn"],
         desc: "Varje skiva på bandet är ett batch. Den börjar blek, bryns när den passerar genom ugnen, och för den enstaka oturliga blir den flaggad och plockas bort från linjen innan packning. Linjen kör en produkt i taget (sex-pack, sedan tolv-pack, sedan sex-pack och tolv-pack Fullkorn), fyller kartonger allt eftersom och går igenom schemat innan lastbilen lastas för utleverans. Bandet stannar även slumpmässigt, precis som en riktig linje gör, och varje räknare håller koll.",
       },
     },
@@ -461,7 +464,6 @@ export const content = {
       headingPost: " på ditt fabriksgolv.",
       footNote: "// portfolio.tsx, senast kompilerad 2026",
     },
-  },
-} as const;
+  } satisfies SiteContent;
 
-export type SiteContent = typeof content.en;
+export const content = { en, sv } as const;

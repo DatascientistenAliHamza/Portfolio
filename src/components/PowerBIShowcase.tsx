@@ -53,14 +53,13 @@ export default function PowerBIShowcase({
           </span>
         </div>
         <Image
-          key={report.id}
           src={report.file}
           alt={report.alt}
           width={1330}
           height={697}
           sizes="(max-width: 800px) 100vw, 1100px"
           style={{ width: "100%", height: "auto" }}
-          priority={active === 0}
+          preload={active === 0}
         />
       </div>
 

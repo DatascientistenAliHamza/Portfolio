@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
 
 const NS = "http://www.w3.org/2000/svg";
 
 type BatchType = {
-  label: string;
   size: number;
   target: number;
   color: string;
@@ -15,10 +14,10 @@ type BatchType = {
 };
 
 const BATCH_TYPES: BatchType[] = [
-  { label: "6-Pack", size: 6, target: 200, color: "#FFB238", fullkorn: false },
-  { label: "12-Pack", size: 12, target: 100, color: "#4CE3D6", fullkorn: false },
-  { label: "6-Pack", size: 6, target: 200, color: "#7BE28A", fullkorn: true },
-  { label: "12-Pack", size: 12, target: 100, color: "#D99B5B", fullkorn: true },
+  { size: 6, target: 200, color: "#FFB238", fullkorn: false },
+  { size: 12, target: 100, color: "#4CE3D6", fullkorn: false },
+  { size: 6, target: 200, color: "#7BE28A", fullkorn: true },
+  { size: 12, target: 100, color: "#D99B5B", fullkorn: true },
 ];
 
 const CARTON_CAP = 5;
@@ -42,7 +41,7 @@ export default function TortillaLine() {
   const stopTextRef = useRef<SVGTextElement>(null);
   const bannerRef = useRef<SVGTextElement>(null);
   const ledRef = useRef<HTMLSpanElement>(null);
-  const statusTextRef = useRef<HTMLSpanElement>(null);
+  const [isStopped, setIsStopped] = useState(false);
 
   const batchNameRef = useRef<SVGTextElement>(null);
   const fullkornTagRef = useRef<SVGGElement>(null);
@@ -102,7 +101,7 @@ export default function TortillaLine() {
 
     function updateBatchCard() {
       const bt = BATCH_TYPES[batchIndex];
-      if (batchNameRef.current) batchNameRef.current.textContent = bt.label;
+      if (batchNameRef.current) batchNameRef.current.textContent = labelsRef.current.batchLabels[batchIndex];
       if (fullkornTagRef.current) fullkornTagRef.current.setAttribute("opacity", bt.fullkorn ? "1" : "0");
       if (batchProgressTextRef.current) batchProgressTextRef.current.textContent = `${batchProgress} / ${bt.target}`;
       if (batchProgressFillRef.current) {
@@ -287,7 +286,7 @@ export default function TortillaLine() {
               ledRef.current.classList.remove("ok");
               ledRef.current.classList.add("amber");
             }
-            if (statusTextRef.current) statusTextRef.current.textContent = labelsRef.current.statusStopped;
+            setIsStopped(true);
             if (ovenGroupRef.current) ovenGroupRef.current.setAttribute("opacity", "0.55");
           } else {
             if (bannerRef.current) bannerRef.current.setAttribute("opacity", "0");
@@ -295,7 +294,7 @@ export default function TortillaLine() {
               ledRef.current.classList.remove("amber");
               ledRef.current.classList.add("ok");
             }
-            if (statusTextRef.current) statusTextRef.current.textContent = labelsRef.current.statusRunning;
+            setIsStopped(false);
             if (ovenGroupRef.current) ovenGroupRef.current.setAttribute("opacity", "1");
           }
         }
@@ -386,23 +385,12 @@ export default function TortillaLine() {
     };
   }, []);
 
-  return (
-    <div className="process-panel">
-      <div className="process-header">
-        <span className="process-title">{t.title}</span>
-        <span className="proj-status" style={{ marginBottom: 0 }}>
-          <span className="led ok" ref={ledRef} />
-          <span className="status-text mono" ref={statusTextRef}>
-            {t.statusRunning}
-          </span>
-        </span>
-      </div>
-      <svg className="process-svg" viewBox="0 0 1200 390">
-        <path ref={pathRef} d="M210,150 L800,150" fill="none" stroke="none" />
-
-        <line x1="90" y1="150" x2="800" y2="150" stroke="#3A2A1F" strokeWidth="10" strokeLinecap="round" />
-        <line className="belt-tread" x1="90" y1="150" x2="800" y2="150" stroke="#8B93A3" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-
+  // These subtrees hold no translated text and are driven entirely by refs the
+  // effect above mutates directly, so memoizing them lets React bail out of
+  // reconciling this large, otherwise-static geometry on a language toggle.
+  const stationsGeometry = useMemo(
+    () => (
+      <>
         <g>
           <text x="45" y="105" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
             Ingredients
@@ -471,6 +459,88 @@ export default function TortillaLine() {
             Rejected
           </text>
         </g>
+      </>
+    ),
+    [],
+  );
+
+  const batchCardGeometry = useMemo(
+    () => (
+      <g ref={batchCardRef}>
+        <rect x="60" y="280" width="528" height="80" rx="6" fill="rgba(255,178,56,0.02)" stroke="var(--line-strong)" strokeWidth="1.5" />
+        <text ref={batchNameRef} x="76" y="303" className="packet-label" fill="var(--text)" fontSize="14" fontWeight="600">
+          6-Pack
+        </text>
+        <g ref={fullkornTagRef} opacity="0">
+          <rect x="148" y="291" width="72" height="17" rx="8.5" fill="rgba(123,226,138,0.12)" stroke="var(--ok)" strokeWidth="1" />
+          <text x="184" y="303.5" textAnchor="middle" className="packet-label mono" fill="var(--ok)" fontSize="9">
+            FULLKORN
+          </text>
+        </g>
+        <text ref={batchProgressTextRef} x="572" y="303" textAnchor="end" className="packet-label mono" fill="var(--muted)" fontSize="12">
+          0 / 200
+        </text>
+
+        <rect x="76" y="314" width="436" height="8" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
+        <rect ref={batchProgressFillRef} x="78" y="316" width="0" height="4" rx="2" fill="#FFB238" />
+
+        <text x="76" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
+          current carton
+        </text>
+        <rect x="176" y="336" width="140" height="7" rx="3.5" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
+        <rect ref={batchCartonFillRef} x="178" y="337.5" width="0" height="4" rx="2" fill="#FFB238" />
+        <text ref={batchCartonTextRef} x="326" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
+          0/5
+        </text>
+      </g>
+    ),
+    [],
+  );
+
+  const truckGeometry = useMemo(
+    () => (
+      <>
+        <line x1="588" y1="318" x2="960" y2="318" stroke="#3A2A1F" strokeWidth="8" strokeLinecap="round" />
+        <line className="pipe-flow" x1="588" y1="318" x2="960" y2="318" stroke="#4CE3D6" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+
+        <g ref={truckGroupRef}>
+          <text x="1085" y="282" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
+            Truck
+          </text>
+          <rect x="960" y="292" width="170" height="58" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
+          <rect x="1130" y="304" width="38" height="40" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
+          <circle cx="995" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
+          <circle cx="1100" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
+          <circle cx="1150" cy="352" r="8" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
+          <g ref={truckBedRef} />
+        </g>
+        <text ref={truckLoadTextRef} x="1045" y="374" textAnchor="middle" className="packet-label mono">
+          Loaded: 0 / 6
+        </text>
+        <text ref={truckDispatchTextRef} x="1180" y="374" textAnchor="end" className="packet-label mono">
+          Trucks out: 0
+        </text>
+      </>
+    ),
+    [],
+  );
+
+  return (
+    <div className="process-panel">
+      <div className="process-header">
+        <span className="process-title">{t.title}</span>
+        <span className="proj-status" style={{ marginBottom: 0 }}>
+          <span className="led ok" ref={ledRef} />
+          <span className="status-text mono">{isStopped ? t.statusStopped : t.statusRunning}</span>
+        </span>
+      </div>
+      <svg className="process-svg" viewBox="0 0 1200 390">
+        <path ref={pathRef} d="M210,150 L800,150" fill="none" stroke="none" />
+
+        <line x1="90" y1="150" x2="800" y2="150" stroke="#3A2A1F" strokeWidth="10" strokeLinecap="round" />
+        <line className="belt-tread" x1="90" y1="150" x2="800" y2="150" stroke="#8B93A3" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+
+        {stationsGeometry}
 
         <text ref={rejectTextRef} x="1180" y="30" textAnchor="end" className="packet-label mono" fill="var(--orange)" fontSize="12">
           Rejected: 0
@@ -502,10 +572,10 @@ export default function TortillaLine() {
 
         <g>
           {[
-            { i: 0, x: 60, w: 118, num: "1", label: "6-Pack" },
-            { i: 1, x: 188, w: 118, num: "2", label: "12-Pack" },
-            { i: 2, x: 316, w: 128, num: "3", label: "6-Pack Fullkorn" },
-            { i: 3, x: 454, w: 134, num: "4", label: "12-Pack Fullkorn" },
+            { i: 0, x: 60, w: 118, num: "1", label: t.batchLabels[0] },
+            { i: 1, x: 188, w: 118, num: "2", label: t.batchLabels[1] },
+            { i: 2, x: 316, w: 128, num: "3", label: t.batchLabels[2] },
+            { i: 3, x: 454, w: 134, num: "4", label: t.batchLabels[3] },
           ].map((step) => (
             <g
               key={step.i}
@@ -527,54 +597,9 @@ export default function TortillaLine() {
           ))}
         </g>
 
-        <g ref={batchCardRef}>
-          <rect x="60" y="280" width="528" height="80" rx="6" fill="rgba(255,178,56,0.02)" stroke="var(--line-strong)" strokeWidth="1.5" />
-          <text ref={batchNameRef} x="76" y="303" className="packet-label" fill="var(--text)" fontSize="14" fontWeight="600">
-            6-Pack
-          </text>
-          <g ref={fullkornTagRef} opacity="0">
-            <rect x="148" y="291" width="72" height="17" rx="8.5" fill="rgba(123,226,138,0.12)" stroke="var(--ok)" strokeWidth="1" />
-            <text x="184" y="303.5" textAnchor="middle" className="packet-label mono" fill="var(--ok)" fontSize="9">
-              FULLKORN
-            </text>
-          </g>
-          <text ref={batchProgressTextRef} x="572" y="303" textAnchor="end" className="packet-label mono" fill="var(--muted)" fontSize="12">
-            0 / 200
-          </text>
+        {batchCardGeometry}
 
-          <rect x="76" y="314" width="436" height="8" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-          <rect ref={batchProgressFillRef} x="78" y="316" width="0" height="4" rx="2" fill="#FFB238" />
-
-          <text x="76" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
-            current carton
-          </text>
-          <rect x="176" y="336" width="140" height="7" rx="3.5" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-          <rect ref={batchCartonFillRef} x="178" y="337.5" width="0" height="4" rx="2" fill="#FFB238" />
-          <text ref={batchCartonTextRef} x="326" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
-            0/5
-          </text>
-        </g>
-
-        <line x1="588" y1="318" x2="960" y2="318" stroke="#3A2A1F" strokeWidth="8" strokeLinecap="round" />
-        <line className="pipe-flow" x1="588" y1="318" x2="960" y2="318" stroke="#4CE3D6" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
-
-        <g ref={truckGroupRef}>
-          <text x="1085" y="282" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
-            Truck
-          </text>
-          <rect x="960" y="292" width="170" height="58" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
-          <rect x="1130" y="304" width="38" height="40" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="2" />
-          <circle cx="995" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
-          <circle cx="1100" cy="352" r="9" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
-          <circle cx="1150" cy="352" r="8" fill="#20150F" stroke="var(--line-strong)" strokeWidth="2" />
-          <g ref={truckBedRef} />
-        </g>
-        <text ref={truckLoadTextRef} x="1045" y="374" textAnchor="middle" className="packet-label mono">
-          Loaded: 0 / 6
-        </text>
-        <text ref={truckDispatchTextRef} x="1180" y="374" textAnchor="end" className="packet-label mono">
-          Trucks out: 0
-        </text>
+        {truckGeometry}
 
         <g ref={layerRef} />
       </svg>
