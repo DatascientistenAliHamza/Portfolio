@@ -392,7 +392,7 @@ export default function TortillaLine() {
     () => (
       <>
         <g>
-          <text x="45" y="105" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
+          <text x="33" y="105" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
             Ingredients
           </text>
           <circle className="ingredient-dot" cx="30" cy="115" r="3.5" fill="#E8ECF2" />
@@ -420,7 +420,7 @@ export default function TortillaLine() {
           </g>
         </g>
 
-        <g transform="translate(310,20)">
+        <g transform="translate(310,6)">
           <svg viewBox="0 0 120 68" width="110" height="62" x="0" y="0">
             <path className="gauge-track" d="M10,62 A50,50 0 0 1 110,62" />
             <path
@@ -472,8 +472,8 @@ export default function TortillaLine() {
           6-Pack
         </text>
         <g ref={fullkornTagRef} opacity="0">
-          <rect x="148" y="291" width="72" height="17" rx="8.5" fill="rgba(123,226,138,0.12)" stroke="var(--ok)" strokeWidth="1" />
-          <text x="184" y="303.5" textAnchor="middle" className="packet-label mono" fill="var(--ok)" fontSize="9">
+          <rect x="440" y="291" width="72" height="17" rx="8.5" fill="rgba(123,226,138,0.12)" stroke="var(--ok)" strokeWidth="1" />
+          <text x="476" y="303.5" textAnchor="middle" className="packet-label mono" fill="var(--ok)" fontSize="9">
             FULLKORN
           </text>
         </g>
