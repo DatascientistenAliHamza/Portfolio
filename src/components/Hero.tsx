@@ -20,7 +20,11 @@ export default function Hero() {
   // entrance animation
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    if (reduced || document.visibilityState === "hidden") return;
+
+    const targets = [headlineRef.current, subRef.current, ...(instrumentsRef.current ? Array.from(instrumentsRef.current.children) : [])].filter(
+      (el): el is Element => el !== null,
+    );
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     if (headlineRef.current) tl.from(headlineRef.current, { y: 26, opacity: 0, duration: 0.9 });
@@ -33,8 +37,16 @@ export default function Hero() {
       );
     }
 
+    // Safety net: if the tab gets backgrounded (rAF stalls) or anything else
+    // interrupts the timeline mid-flight, guarantee the content still ends
+    // up fully visible instead of stuck at its hidden "from" state.
+    const safety = window.setTimeout(() => {
+      gsap.set(targets, { clearProps: "opacity,transform" });
+    }, 2500);
+
     return () => {
       tl.kill();
+      window.clearTimeout(safety);
     };
   }, []);
 
@@ -78,7 +90,7 @@ export default function Hero() {
         return;
       }
       const counter = { value: 0 };
-      gsap.to(counter, {
+      const tween = gsap.to(counter, {
         value: inst.target,
         duration: 1.6,
         delay: 0.3 + i * 0.15,
@@ -87,6 +99,14 @@ export default function Hero() {
           el.textContent = `${Math.round(counter.value)}${inst.suffix}`;
         },
       });
+      // Safety net: if the tab gets backgrounded and the tween stalls,
+      // guarantee the counter still lands on its real final value.
+      window.setTimeout(() => {
+        if (tween.progress() < 1) {
+          tween.progress(1);
+          el.textContent = `${inst.target}${inst.suffix}`;
+        }
+      }, 4000);
     });
     // t.instruments is stable per language; re-run whenever it changes so a
     // language toggle still shows the correct final numbers.

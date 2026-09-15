@@ -25,6 +25,8 @@ export default function ScrollReveal({
     if (!el || reduced) return;
 
     const targets = el.children.length ? Array.from(el.children) : [el];
+    let safety: number | undefined;
+
     const ctx = gsap.context(() => {
       gsap.from(targets, {
         y,
@@ -36,11 +38,22 @@ export default function ScrollReveal({
           trigger: el,
           start: "top 85%",
           once: true,
+          // Safety net: once the reveal actually starts, guarantee the
+          // content ends up visible even if the tab gets backgrounded
+          // (rAF stalls) or anything else interrupts the tween mid-flight.
+          onEnter: () => {
+            safety = window.setTimeout(() => {
+              gsap.set(targets, { clearProps: "opacity,transform" });
+            }, 2500);
+          },
         },
       });
     });
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      if (safety) window.clearTimeout(safety);
+    };
   }, [y, stagger]);
 
   return (
