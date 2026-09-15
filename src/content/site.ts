@@ -28,7 +28,18 @@ const en = {
       p4: "What actually drives me is that I genuinely enjoy this: data science, Power BI, anything IT touches. When something doesn't work, I want to solve it, and I'm just as happy finding an unconventional way in as following the obvious one. I'll take initiative on my own ideas once I've got buy-in, and I follow through until the result actually satisfies whoever asked for it. None of that happens in isolation though. The people on the floor or in the business hold the real information, and I see my job as turning that into something clear enough for everyone to act on, which means I'm always happier building something with people than for them. I read, test, and stay close to what's new, because standing still isn't really an option in this field.",
       funFact:
         '// true story: a mis-calibrated vibration sensor once had us chasing a "ghost fault" for two weeks. we found it. it was the sensor.',
-      radarCaption: "skill signal strength",
+      radarCaption: "tools and areas I work in",
+      traits: [
+        {
+          title: "Analytical thinking",
+          desc: "Comfortable pulling a problem apart until the real driver is visible, not just the symptom.",
+        },
+        {
+          title: "Solution-oriented",
+          desc: "I look for the way in that actually works, even when it is not the obvious one.",
+        },
+      ],
+      skills: ["Python / ML", "SQL", "Power BI / DAX", "Time-series & sensors", "SCADA / OT data", "Statistics"],
     },
     experience: {
       sectionNum: "02",
@@ -305,7 +316,18 @@ const sv = {
       p4: "Det som verkligen driver mig är att jag genuint gillar det här: data science, Power BI, allt som rör IT. När något inte fungerar vill jag lösa det, och jag är lika nöjd med att hitta en okonventionell väg dit som att följa den uppenbara. Jag tar gärna initiativ till egna idéer så fort jag fått klartecken, och jag ser till att driva det hela i mål tills resultatet faktiskt tillfredsställer den som bad om det. Inget av det sker isolerat däremot. Personerna ute på golvet eller i verksamheten sitter på den verkliga kunskapen, och jag ser min roll som att göra den tydlig nog för alla att agera på, vilket gör att jag alltid hellre bygger något tillsammans med folk än åt dem. Jag läser på, testar och håller mig nära det som är nytt, för att stå still egentligen inte är ett alternativ i det här fältet.",
       funFact:
         '// sann historia: en felkalibrerad vibrationssensor fick oss att jaga ett "spökfel" i två veckor. vi hittade det. det var sensorn.',
-      radarCaption: "kompetensstyrka",
+      radarCaption: "verktyg och områden jag jobbar i",
+      traits: [
+        {
+          title: "Analytisk förmåga",
+          desc: "Bekväm med att bryta ner ett problem tills den verkliga orsaken syns, inte bara symptomet.",
+        },
+        {
+          title: "Lösningsorienterad",
+          desc: "Jag letar efter den lösning som faktiskt fungerar, även när den inte är den uppenbara.",
+        },
+      ],
+      skills: ["Python / ML", "SQL", "Power BI / DAX", "Tidsserier & sensorer", "SCADA / OT-data", "Statistik"],
     },
     experience: {
       sectionNum: "02",

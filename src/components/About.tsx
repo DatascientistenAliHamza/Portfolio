@@ -1,6 +1,6 @@
 "use client";
 
-import RadarChart from "./RadarChart";
+import Skills from "./Skills";
 import ScrollReveal from "./ScrollReveal";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
@@ -23,10 +23,7 @@ export default function About() {
           <p>{t.p4}</p>
           <div className="fun-fact mono">{t.funFact}</div>
         </div>
-        <div className="radar-wrap">
-          <RadarChart />
-          <div className="radar-caption">{t.radarCaption}</div>
-        </div>
+        <Skills />
       </ScrollReveal>
     </section>
   );
