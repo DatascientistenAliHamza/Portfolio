@@ -135,6 +135,11 @@ export default function Hero() {
           </div>
         ))}
       </div>
+
+      <div className="scroll-cue">
+        <span className="scroll-cue-line" />
+        <span className="scroll-cue-label mono">scroll</span>
+      </div>
     </header>
   );
 }

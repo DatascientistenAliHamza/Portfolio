@@ -94,15 +94,59 @@ const en = {
       refNote: "Reference available on request",
       sideBadge: "Personal project, built in my free time",
       sideText:
-        "A tortilla production line, simulated end to end. I wanted to see whether the same anomaly detection and downtime tracking thinking from my day job (stop time, bad batches, oven temperature) held up on a completely different process.",
+        "A bread bakery line, simulated from start to finish. I wanted to see if the same thinking I use at work (stop time, bad batches, oven temperature) also works for a completely different process.",
       tortilla: {
-        title: "Tortilla Line Downtime and Quality Monitor",
+        title: "Bread Line Monitor",
         statusRunning: "RUNNING",
         statusStopped: "STOPPED",
         lineStoppedLabel: "LINE STOPPED",
         packingHeader: "PACKING AND SHIPPING, ONE BATCH AT A TIME",
-        batchLabels: ["6-Pack", "12-Pack", "6-Pack Fullkorn", "12-Pack Fullkorn"],
-        desc: "Every disc on the belt is a batch. It starts pale, browns as it passes through the oven, and for the odd unlucky one, gets flagged and pulled off the line before packing. The line runs one product at a time (six packs, then twelve packs, then six pack and twelve pack Fullkorn), filling cartons as it goes and cycling through the schedule before loading the truck for dispatch. The belt also stops at random, the way a real line does, and every counter keeps score.",
+        batchLabels: ["6-Pack", "12-Pack", "6-Pack Whole Grain", "12-Pack Whole Grain"],
+        desc: "Each disc on the belt is one loaf. It starts pale and turns golden in the oven. A few get flagged and pulled off before packing. The line bakes one size at a time: six packs, then twelve packs, then whole grain versions of both. It fills boxes, loads the truck, and stops now and then, just like a real bakery line. Every stop and reject gets counted.",
+      },
+      lpreaderBadge: "Internal tool, built to save real time",
+      lpreaderIntro:
+        "A desktop tool that reads PDF invoices, lets you tag VAT and accounting codes in bulk, and exports straight to Excel.",
+      lpreader: {
+        title: "LPReader",
+        fileLabel: "lpreader.exe",
+        reports: [
+          {
+            id: "overview",
+            label: "Overview",
+            file: "/LPReader/LPR1.png",
+            alt: "LPReader before any invoices are loaded",
+            caption: "A small desktop tool that reads PDF invoices and turns them into a clean, editable table.",
+          },
+          {
+            id: "reading",
+            label: "Reading Invoices",
+            file: "/LPReader/LPR2.png",
+            alt: "LPReader reading a multi page PDF invoice",
+            caption: "Drop in one or more PDFs and it reads every page, checking each page's total as it goes.",
+          },
+          {
+            id: "table",
+            label: "Extracted Lines",
+            file: "/LPReader/LPR3.png",
+            alt: "Table of extracted invoice lines with dates and amounts",
+            caption: "Every line lands in a table with dates, amounts, and which PDF page it came from.",
+          },
+          {
+            id: "vat",
+            label: "Bulk VAT",
+            file: "/LPReader/LPR4.png",
+            alt: "Selecting rows and applying a VAT rate to all of them at once",
+            caption: "Select a batch of rows and set the VAT rate on all of them in one click.",
+          },
+          {
+            id: "coding",
+            label: "Bulk Coding",
+            file: "/LPReader/LPR5.png",
+            alt: "Applying an accounting code to selected rows",
+            caption: "Same for accounting codes: tag many rows at once, then export straight to Excel or CSV.",
+          },
+        ],
       },
     },
     powerbi: {
@@ -112,7 +156,7 @@ const en = {
         "Two reports, two different worlds: a synthetic matchday reporting suite built for this portfolio, and a real internal billing analytics dashboard built for Leadpoint, shown here with client and consultant names redacted.",
       sports: {
         title: "LeadPoint Sports Intelligence",
-        filePrefix: "leadpoint_sports_intelligence",
+        fileLabel: "leadpoint_sports_intelligence.pbix",
         reports: [
           {
             id: "overview",
@@ -165,7 +209,7 @@ const en = {
       },
       billing: {
         title: "LeadPoint Billing Analytics",
-        filePrefix: "leadpoint_billing_analytics",
+        fileLabel: "leadpoint_billing_analytics.pbix",
         reports: [
           {
             id: "overview",
@@ -327,15 +371,59 @@ const sv = {
       refNote: "Referens finns på begäran",
       sideBadge: "Personligt projekt, byggt på fritiden",
       sideText:
-        "En tortillaproduktionslinje, simulerad från start till mål. Jag ville se om samma tänk kring avvikelsedetektering och stilleståndsspårning som i mitt vanliga arbete (stopptid, dåliga batcher, ugnstemperatur) höll även för en helt annan process.",
+        "En bagerilinje för bröd, simulerad från start till slut. Jag ville se om samma tänk som jag använder i jobbet (stopptid, dåliga bröd, ugnstemperatur) också funkar för en helt annan process.",
       tortilla: {
-        title: "Drifts- och kvalitetsövervakning för en tortillalinje",
+        title: "Övervakning av brödlinje",
         statusRunning: "IGÅNG",
         statusStopped: "STOPPAD",
         lineStoppedLabel: "LINJEN STOPPAD",
         packingHeader: "PACKNING OCH LEVERANS, ETT BATCH I TAGET",
         batchLabels: ["6-pack", "12-pack", "6-pack Fullkorn", "12-pack Fullkorn"],
-        desc: "Varje skiva på bandet är ett batch. Den börjar blek, bryns när den passerar genom ugnen, och för den enstaka oturliga blir den flaggad och plockas bort från linjen innan packning. Linjen kör en produkt i taget (sex-pack, sedan tolv-pack, sedan sex-pack och tolv-pack Fullkorn), fyller kartonger allt eftersom och går igenom schemat innan lastbilen lastas för utleverans. Bandet stannar även slumpmässigt, precis som en riktig linje gör, och varje räknare håller koll.",
+        desc: "Varje skiva på bandet är ett bröd. Det börjar blekt och blir gyllenbrunt i ugnen. Några få bröd blir dåliga och plockas bort innan packning. Linjen bakar en storlek i taget: sex-pack, sedan tolv-pack, och sedan fullkornsvarianter av båda. Den fyller kartonger, lastar lastbilen, och stannar ibland, precis som ett riktigt bageri. Varje stopp och kasserat bröd räknas.",
+      },
+      lpreaderBadge: "Internverktyg, byggt för att spara riktig tid",
+      lpreaderIntro:
+        "Ett skrivbordsverktyg som läser PDF-fakturor, låter dig sätta moms och kontering på flera rader samtidigt, och exporterar direkt till Excel.",
+      lpreader: {
+        title: "LPReader",
+        fileLabel: "lpreader.exe",
+        reports: [
+          {
+            id: "overview",
+            label: "Översikt",
+            file: "/LPReader/LPR1.png",
+            alt: "LPReader innan några fakturor lästs in",
+            caption: "Ett litet skrivbordsverktyg som läser PDF-fakturor och gör om dem till en ren, redigerbar tabell.",
+          },
+          {
+            id: "reading",
+            label: "Läser fakturor",
+            file: "/LPReader/LPR2.png",
+            alt: "LPReader läser en flersidig PDF-faktura",
+            caption: "Släpp in en eller flera PDF:er så läser den varje sida och stämmer av totalsumman.",
+          },
+          {
+            id: "table",
+            label: "Extraherade rader",
+            file: "/LPReader/LPR3.png",
+            alt: "Tabell med extraherade fakturarader, datum och belopp",
+            caption: "Varje rad hamnar i en tabell med datum, belopp och vilken PDF-sida den kom från.",
+          },
+          {
+            id: "vat",
+            label: "Moms i klump",
+            file: "/LPReader/LPR4.png",
+            alt: "Markera rader och sätta momssats på alla samtidigt",
+            caption: "Markera flera rader och sätt momssatsen på alla samtidigt.",
+          },
+          {
+            id: "coding",
+            label: "Kontering i klump",
+            file: "/LPReader/LPR5.png",
+            alt: "Sätta kontering på markerade rader",
+            caption: "Samma sak för kontering: tagga många rader på en gång, exportera sen direkt till Excel eller CSV.",
+          },
+        ],
       },
     },
     powerbi: {
@@ -345,7 +433,7 @@ const sv = {
         "Två rapporter, två olika världar: en syntetisk matchdagsrapport byggd för den här portfolion, och en riktig intern faktureringsanalys byggd för Leadpoint, visad här med kund- och konsultnamn dolda.",
       sports: {
         title: "LeadPoint Sports Intelligence",
-        filePrefix: "leadpoint_sports_intelligence",
+        fileLabel: "leadpoint_sports_intelligence.pbix",
         reports: [
           {
             id: "overview",
@@ -397,7 +485,7 @@ const sv = {
       },
       billing: {
         title: "LeadPoint Billing Analytics",
-        filePrefix: "leadpoint_billing_analytics",
+        fileLabel: "leadpoint_billing_analytics.pbix",
         reports: [
           {
             id: "overview",

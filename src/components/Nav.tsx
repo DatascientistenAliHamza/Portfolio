@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import LeadpointMark from "./LeadpointMark";
+import Image from "next/image";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
@@ -17,6 +17,9 @@ export default function Nav() {
         <span className="logo-dot" />
         ali hamza
       </div>
+      <span className="nav-leadpoint-chip">
+        <Image src="/leadpoint-logo.png" alt="Leadpoint" width={696} height={145} className="nav-leadpoint-logo" preload />
+      </span>
       <button
         type="button"
         className="nav-toggle"
@@ -55,9 +58,6 @@ export default function Nav() {
         </li>
         <li>
           <LanguageToggle />
-        </li>
-        <li>
-          <LeadpointMark />
         </li>
       </ul>
     </nav>

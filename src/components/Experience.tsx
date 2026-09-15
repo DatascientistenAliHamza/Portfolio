@@ -1,5 +1,6 @@
 "use client";
 
+import ScrollReveal from "./ScrollReveal";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
 
@@ -9,11 +10,11 @@ export default function Experience() {
 
   return (
     <section id="experience">
-      <div className="section-head">
+      <ScrollReveal className="section-head">
         <span className="section-num mono">{t.sectionNum}</span>
         <h2>{t.title}</h2>
-      </div>
-      <div className="timeline">
+      </ScrollReveal>
+      <ScrollReveal className="timeline" y={28} stagger={0.1}>
         {t.entries.map((e) => (
           <div className="tl-row" key={e.id}>
             <div className="station">{e.id}</div>
@@ -27,7 +28,7 @@ export default function Experience() {
             </div>
           </div>
         ))}
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

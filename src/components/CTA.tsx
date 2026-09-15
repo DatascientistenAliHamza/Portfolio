@@ -1,5 +1,6 @@
 "use client";
 
+import ScrollReveal from "./ScrollReveal";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
 
@@ -8,7 +9,7 @@ export default function CTA() {
   const t = content[lang].cta;
 
   return (
-    <div className="cta-band">
+    <ScrollReveal className="cta-band" y={20} stagger={0.1}>
       <div>
         <h3>{t.heading}</h3>
         <p>{t.body}</p>
@@ -16,6 +17,6 @@ export default function CTA() {
       <a className="cta-btn" href="mailto:ali.hamza@leadpoint.se">
         {t.button} →
       </a>
-    </div>
+    </ScrollReveal>
   );
 }

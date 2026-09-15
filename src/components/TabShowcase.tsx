@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-export type PowerBIReport = {
+export type ShowcaseItem = {
   id: string;
   label: string;
   file: string;
@@ -11,14 +11,14 @@ export type PowerBIReport = {
   caption: string;
 };
 
-export default function PowerBIShowcase({
+export default function TabShowcase({
   title,
-  filePrefix,
+  fileLabel,
   reports,
 }: {
   title: string;
-  filePrefix: string;
-  reports: readonly PowerBIReport[];
+  fileLabel: string;
+  reports: readonly ShowcaseItem[];
 }) {
   const [active, setActive] = useState(0);
   const report = reports[active];
@@ -49,7 +49,7 @@ export default function PowerBIShowcase({
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-dot" />
           <span className="pbi-frame-label mono">
-            {filePrefix}.pbix · {report.label}
+            {fileLabel} · {report.label}
           </span>
         </div>
         <Image

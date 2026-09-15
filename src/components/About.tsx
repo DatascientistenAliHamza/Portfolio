@@ -1,6 +1,7 @@
 "use client";
 
 import RadarChart from "./RadarChart";
+import ScrollReveal from "./ScrollReveal";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
 
@@ -10,11 +11,11 @@ export default function About() {
 
   return (
     <section id="about">
-      <div className="section-head">
+      <ScrollReveal className="section-head">
         <span className="section-num mono">{t.sectionNum}</span>
         <h2>{t.title}</h2>
-      </div>
-      <div className="about-grid">
+      </ScrollReveal>
+      <ScrollReveal className="about-grid" y={24} stagger={0.12}>
         <div className="about-text">
           <p>{t.p1}</p>
           <p>{t.p2}</p>
@@ -26,7 +27,7 @@ export default function About() {
           <RadarChart />
           <div className="radar-caption">{t.radarCaption}</div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
