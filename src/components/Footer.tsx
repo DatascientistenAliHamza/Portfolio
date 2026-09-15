@@ -26,13 +26,15 @@ export default function Footer() {
         </a>
       </div>
 
-      <div className="leadpoint-banner">
+      <a href="https://www.leadpoint.se/" target="_blank" rel="noopener noreferrer" className="leadpoint-banner">
         <Image src="/leadpoint-logo.png" alt="Leadpoint" width={696} height={145} className="leadpoint-banner-logo" />
-      </div>
+      </a>
 
       <div className="foot-note mono">
         <span>{t.footNote}</span>
-        <LeadpointMark />
+        <a href="https://www.leadpoint.se/" target="_blank" rel="noopener noreferrer" aria-label="Leadpoint">
+          <LeadpointMark />
+        </a>
       </div>
     </footer>
   );

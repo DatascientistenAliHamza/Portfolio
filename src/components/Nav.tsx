@@ -17,9 +17,9 @@ export default function Nav() {
         <span className="logo-dot" />
         ali hamza
       </div>
-      <span className="nav-leadpoint-chip">
+      <a href="https://www.leadpoint.se/" target="_blank" rel="noopener noreferrer" className="nav-leadpoint-chip">
         <Image src="/leadpoint-logo.png" alt="Leadpoint" width={696} height={145} className="nav-leadpoint-logo" preload />
-      </span>
+      </a>
       <button
         type="button"
         className="nav-toggle"
