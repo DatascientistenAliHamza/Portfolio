@@ -15,8 +15,8 @@ const en = {
       headlinePost: ", and I genuinely love it.",
       sub: "Hi, I'm Ali. I'm a data scientist who's happiest on an actual factory floor, headphones on, chasing down why a sensor spiked at 3am. I build models and dashboards that maintenance techs are glad to open, not ones that get built once and forgotten.",
       instruments: [
-        { target: 47, suffix: "", label: "Power BI reports delivered across real engagements" },
-        { target: 100, suffix: "+", label: "software builds shipped, several running factory automation today" },
+        { target: 47, suffix: "", label: "Power BI reports built for clients, internal tools, and personal projects" },
+        { target: 40, suffix: "+", label: "software builds shipped, several running factory automation today" },
       ],
     },
     about: {
@@ -292,8 +292,8 @@ const sv = {
       headlinePost: ", och jag älskar det uppriktigt.",
       sub: "Hej, jag heter Ali. Jag är data scientist och trivs bäst ute på ett riktigt fabriksgolv, med hörlurarna på, och gräver gärna i varför en sensor gav utslag klockan tre på natten. Jag bygger modeller och dashboards som underhållstekniker faktiskt vill öppna, inte sådana som byggs en gång och sedan glöms bort.",
       instruments: [
-        { target: 47, suffix: "", label: "Power BI-rapporter levererade i skarpa uppdrag" },
-        { target: 100, suffix: "+", label: "mjukvarubyggen levererade, flera i drift för fabriksautomation idag" },
+        { target: 47, suffix: "", label: "Power BI-rapporter byggda åt kunder, interna verktyg och personliga projekt" },
+        { target: 40, suffix: "+", label: "mjukvarubyggen levererade, flera i drift för fabriksautomation idag" },
       ],
     },
     about: {
