@@ -14,10 +14,10 @@ type BatchType = {
 };
 
 const BATCH_TYPES: BatchType[] = [
-  { size: 6, target: 200, color: "#FFB238", fullkorn: false },
+  { size: 6, target: 200, color: "var(--amber)", fullkorn: false },
   { size: 12, target: 100, color: "#4CE3D6", fullkorn: false },
   { size: 6, target: 200, color: "#7BE28A", fullkorn: true },
-  { size: 12, target: 100, color: "#D99B5B", fullkorn: true },
+  { size: 12, target: 100, color: "var(--orange)", fullkorn: true },
 ];
 
 const CARTON_CAP = 5;
@@ -311,7 +311,7 @@ export default function TortillaLine() {
         const frac01 = Math.max(0, Math.min(1, (temp - 190) / (260 - 190)));
         if (gaugeFillRef.current) {
           gaugeFillRef.current.setAttribute("stroke-dashoffset", (157 * (1 - frac01)).toFixed(1));
-          gaugeFillRef.current.setAttribute("stroke", isSpike ? "#FF6B4A" : "#FFB238");
+          gaugeFillRef.current.setAttribute("stroke", isSpike ? "var(--orange)" : "var(--amber)");
         }
         if (tempReadoutRef.current) tempReadoutRef.current.textContent = Math.round(temp) + "°C";
 
@@ -397,7 +397,7 @@ export default function TortillaLine() {
           </text>
           <circle className="ingredient-dot" cx="30" cy="115" r="3.5" fill="#E8ECF2" />
           <circle className="ingredient-dot i2" cx="30" cy="120" r="3.5" fill="#4CE3D6" />
-          <circle className="ingredient-dot i3" cx="30" cy="125" r="3.5" fill="#FFB238" />
+          <circle className="ingredient-dot i3" cx="30" cy="125" r="3.5" fill="var(--amber)" />
         </g>
 
         <g>
@@ -412,11 +412,11 @@ export default function TortillaLine() {
           <text x="362" y="82" textAnchor="middle" className="packet-label" fill="var(--text)" fontSize="12" fontWeight="600">
             Oven
           </text>
-          <g stroke="#FF6B4A" strokeWidth="3" fill="none" strokeLinecap="round">
-            <path className="flame f1" d="M295,208 q-5,-16 0,-24 q5,8 0,24" fill="#FF6B4A" stroke="none" />
-            <path className="flame f2" d="M335,208 q-5,-16 0,-24 q5,8 0,24" fill="#FFB238" stroke="none" />
-            <path className="flame f3" d="M395,208 q-5,-16 0,-24 q5,8 0,24" fill="#FFB238" stroke="none" />
-            <path className="flame f4" d="M435,208 q-5,-16 0,-24 q5,8 0,24" fill="#FF6B4A" stroke="none" />
+          <g stroke="var(--orange)" strokeWidth="3" fill="none" strokeLinecap="round">
+            <path className="flame f1" d="M295,208 q-5,-16 0,-24 q5,8 0,24" fill="var(--orange)" stroke="none" />
+            <path className="flame f2" d="M335,208 q-5,-16 0,-24 q5,8 0,24" fill="var(--amber)" stroke="none" />
+            <path className="flame f3" d="M395,208 q-5,-16 0,-24 q5,8 0,24" fill="var(--amber)" stroke="none" />
+            <path className="flame f4" d="M435,208 q-5,-16 0,-24 q5,8 0,24" fill="var(--orange)" stroke="none" />
           </g>
         </g>
 
@@ -425,7 +425,7 @@ export default function TortillaLine() {
             <path className="gauge-track" d="M10,62 A50,50 0 0 1 110,62" />
             <path
               ref={gaugeFillRef}
-              stroke="#FFB238"
+              stroke="var(--amber)"
               strokeWidth="8"
               strokeLinecap="round"
               fill="none"
@@ -482,13 +482,13 @@ export default function TortillaLine() {
         </text>
 
         <rect x="76" y="314" width="436" height="8" rx="4" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-        <rect ref={batchProgressFillRef} x="78" y="316" width="0" height="4" rx="2" fill="#FFB238" />
+        <rect ref={batchProgressFillRef} x="78" y="316" width="0" height="4" rx="2" fill="var(--amber)" />
 
         <text x="76" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
           current carton
         </text>
         <rect x="176" y="336" width="140" height="7" rx="3.5" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-        <rect ref={batchCartonFillRef} x="178" y="337.5" width="0" height="4" rx="2" fill="#FFB238" />
+        <rect ref={batchCartonFillRef} x="178" y="337.5" width="0" height="4" rx="2" fill="var(--amber)" />
         <text ref={batchCartonTextRef} x="326" y="343" className="packet-label mono" fill="var(--muted)" fontSize="10">
           0/5
         </text>
@@ -568,7 +568,7 @@ export default function TortillaLine() {
         </text>
 
         <line x1="730" y1="195" x2="730" y2="222" stroke="#3A2A1F" strokeWidth="8" strokeLinecap="round" />
-        <line className="pipe-flow" x1="730" y1="195" x2="730" y2="222" stroke="#FFB238" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+        <line className="pipe-flow" x1="730" y1="195" x2="730" y2="222" stroke="var(--amber)" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
 
         <g>
           {[

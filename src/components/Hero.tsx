@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useLanguage } from "@/lib/language";
 import { content } from "@/content/site";
+import HeroVisual from "./HeroVisual";
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -121,44 +122,50 @@ export default function Hero() {
       <span className="bracket bl" />
       <span className="bracket br" />
 
-      <div className="hero-top">
-        <div className="avatar" ref={avatarRef}>
-          <span>AH</span>
-        </div>
-        <div className="prompt">
-          &gt; {t.prompt}
-          <span className="caret" />
-        </div>
-      </div>
-
-      <h1 className="headline" ref={headlineRef}>
-        {t.headlinePre}
-        <span className="grad">{t.headlineGrad}</span>
-        {t.headlinePost}
-      </h1>
-      <p className="hero-sub" ref={subRef}>
-        {t.sub}
-      </p>
-
-      <div className="instruments" ref={instrumentsRef}>
-        {t.instruments.map((inst, i) => (
-          <div className="instrument" key={i}>
-            <span
-              className="kpi-num mono"
-              ref={(el) => {
-                numRefs.current[i] = el;
-              }}
-            >
-              0{inst.suffix}
-            </span>
-            <div className="inst-label">{inst.label}</div>
+      <div className="hero-grid">
+        <div className="hero-content">
+          <div className="hero-top">
+            <div className="avatar" ref={avatarRef}>
+              <span>AH</span>
+            </div>
+            <div className="prompt">
+              &gt; {t.prompt}
+              <span className="caret" />
+            </div>
           </div>
-        ))}
-      </div>
 
-      <div className="scroll-cue">
-        <span className="scroll-cue-line" />
-        <span className="scroll-cue-label mono">scroll</span>
+          <h1 className="headline" ref={headlineRef}>
+            {t.headlinePre}
+            <span className="grad">{t.headlineGrad}</span>
+            {t.headlinePost}
+          </h1>
+          <p className="hero-sub" ref={subRef}>
+            {t.sub}
+          </p>
+
+          <div className="instruments" ref={instrumentsRef}>
+            {t.instruments.map((inst, i) => (
+              <div className="instrument" key={i}>
+                <span
+                  className="kpi-num mono"
+                  ref={(el) => {
+                    numRefs.current[i] = el;
+                  }}
+                >
+                  0{inst.suffix}
+                </span>
+                <div className="inst-label">{inst.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="scroll-cue">
+            <span className="scroll-cue-line" />
+            <span className="scroll-cue-label mono">scroll</span>
+          </div>
+        </div>
+
+        <HeroVisual />
       </div>
     </header>
   );
