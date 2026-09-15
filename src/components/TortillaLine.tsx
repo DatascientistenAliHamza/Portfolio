@@ -455,7 +455,7 @@ export default function TortillaLine() {
 
         <g>
           <path d="M600,215 L640,215 L634,240 L606,240 Z" fill="none" stroke="var(--orange)" strokeWidth="2" />
-          <text x="620" y="253" textAnchor="middle" className="packet-label mono" fill="var(--orange)" fontSize="10">
+          <text x="620" y="207" textAnchor="middle" className="packet-label mono" fill="var(--orange)" fontSize="10">
             Rejected
           </text>
         </g>
@@ -550,12 +550,12 @@ export default function TortillaLine() {
         </text>
         <text
           ref={bannerRef}
-          x="450"
-          y="235"
-          textAnchor="middle"
+          x="1180"
+          y="65"
+          textAnchor="end"
           className="packet-label mono stop-flash"
           fill="var(--orange)"
-          fontSize="13"
+          fontSize="12"
           fontWeight="600"
           opacity="0"
         >
