@@ -21,7 +21,6 @@ export default function About() {
           <p>{t.p2}</p>
           <p>{t.p3}</p>
           <p>{t.p4}</p>
-          <div className="fun-fact mono">{t.funFact}</div>
         </div>
         <Skills />
       </ScrollReveal>

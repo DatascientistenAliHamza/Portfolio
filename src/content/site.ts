@@ -22,12 +22,10 @@ const en = {
     about: {
       sectionNum: "01",
       title: "About",
-      p1: "My background is finance turned manufacturing, so I care as much about whether a sensor reading is trustworthy as whether the model on top of it is clever. Plant data is noisy and mistimed way more often than any textbook admits, and I find that genuinely fun to untangle.",
-      p2: "Recent work has centered on predictive maintenance: pulling vibration, temperature, and pressure telemetry off rolling mills and compressors and turning it into failure warnings that reach a technician's phone before the equipment does, not after.",
-      p3: "I still walk the floor for every project I take on, because the best feature in my model is usually something a technician mentioned in passing.",
+      p1: "My background is in industrial food production, where I automated workflows and increased output in ways that created real value for the plant. From there I moved into heavier data structuring work, Power BI, and building internal tools that people actually use.",
+      p2: "I've built several Power BI reports, a PDF invoice reader, reporting tools, and dashboards pulling KPIs straight from SCADA databases. I've also read and structured data in formats like JSON, including for decision-making in the public sector and for building out various web services.",
+      p3: "A lot of the work is cross-department: helping teams make straightforward decisions, but also visualizing data so they understand the business in depth. One example was showing how much money could be saved on hardware that was never used, or licenses nobody needed.",
       p4: "What actually drives me is that I genuinely enjoy this: data science, Power BI, anything IT touches. When something doesn't work, I want to solve it, and I'm just as happy finding an unconventional way in as following the obvious one. I'll take initiative on my own ideas once I've got buy-in, and I follow through until the result actually satisfies whoever asked for it. None of that happens in isolation though. The people on the floor or in the business hold the real information, and I see my job as turning that into something clear enough for everyone to act on, which means I'm always happier building something with people than for them. I read, test, and stay close to what's new, because standing still isn't really an option in this field.",
-      funFact:
-        '// true story: a mis-calibrated vibration sensor once had us chasing a "ghost fault" for two weeks. we found it. it was the sensor.',
       radarCaption: "tools and areas I work in",
       traits: [
         {
@@ -310,12 +308,10 @@ const sv = {
     about: {
       sectionNum: "01",
       title: "Om mig",
-      p1: "Min bakgrund är finans som blev tillverkningsindustri, så jag bryr mig lika mycket om huruvida en sensoravläsning går att lita på som om modellen ovanpå den är smart. Anläggningsdata är brusig och feltajmad betydligt oftare än någon lärobok erkänner, och jag tycker det är genuint roligt att reda ut.",
-      p2: "Det senaste arbetet har handlat om prediktivt underhåll: att hämta vibrations-, temperatur- och tryckdata från valsverk och kompressorer och omvandla den till varningar som når en teknikers telefon innan utrustningen stannar, inte efteråt.",
-      p3: "Jag går fortfarande ut på golvet för varje projekt jag tar mig an, för den bästa variabeln i min modell är oftast något en tekniker nämnde i förbifarten.",
+      p1: "Min bakgrund är från industriell livsmedelsproduktion, där jag automatiserade flöden och höjde produktionen på ett sätt som skapade stort värde för fabriken. Därifrån gick jag vidare till tyngre datastrukturering, Power BI och att bygga interna verktyg som faktiskt används.",
+      p2: "Jag har byggt flera Power BI-rapporter, en PDF-avläsare för fakturor, rapportverktyg och dashboards med nyckeltal hämtade direkt från SCADA-databaser. Jag har även läst och strukturerat data i format som JSON, bland annat som beslutsunderlag inom offentlig sektor och för att bygga upp olika webbtjänster.",
+      p3: "Mycket av arbetet är mot olika avdelningar: att hjälpa dem ta enkla beslut, men också visualisera data så de förstår verksamheten på djupet. Ett exempel var att visa hur mycket pengar som gick att spara på hårdvara som aldrig användes, eller licenser som inte behövdes.",
       p4: "Det som verkligen driver mig är att jag genuint gillar det här: data science, Power BI, allt som rör IT. När något inte fungerar vill jag lösa det, och jag är lika nöjd med att hitta en okonventionell väg dit som att följa den uppenbara. Jag tar gärna initiativ till egna idéer så fort jag fått klartecken, och jag ser till att driva det hela i mål tills resultatet faktiskt tillfredsställer den som bad om det. Inget av det sker isolerat däremot. Personerna ute på golvet eller i verksamheten sitter på den verkliga kunskapen, och jag ser min roll som att göra den tydlig nog för alla att agera på, vilket gör att jag alltid hellre bygger något tillsammans med folk än åt dem. Jag läser på, testar och håller mig nära det som är nytt, för att stå still egentligen inte är ett alternativ i det här fältet.",
-      funFact:
-        '// sann historia: en felkalibrerad vibrationssensor fick oss att jaga ett "spökfel" i två veckor. vi hittade det. det var sensorn.',
       radarCaption: "verktyg och områden jag jobbar i",
       traits: [
         {
